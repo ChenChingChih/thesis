@@ -2,8 +2,8 @@ bookdown::gitbook:
 #  includes:
 #    before_body: latex/mathjax_bm.tex
   includes:
-    in_header: latex/custom.js
-    after_body: disqus.html
+#    in_header: latex/custom.js
+#    after_body: disqus.html
   css: style.css
   dev: "png"
   pandoc_args: "--csl=cite-style.csl"

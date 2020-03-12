@@ -25,13 +25,13 @@ tinytex::install_tinytex()
 
 開啟 RStudio，選取左上方 `File` > `New File` > `R Markdown`：
 
-```{r fig.cap="透過 RStudio 匯入論文模板"}
-if (knitr::is_html_output()) {
-  knitr::include_graphics("figs/rmd-template.gif")
-} else {
-  knitr::include_graphics("figs/rmd-template.png")
-}
-```
+#```{r fig.cap="透過 RStudio 匯入論文模板"}
+#if (knitr::is_html_output()) {
+#  knitr::include_graphics("figs/rmd-template.gif")
+#} else {
+#  knitr::include_graphics("figs/rmd-template.png")
+#}
+#```
 
 或是直接在 console 執行：
 ```r
