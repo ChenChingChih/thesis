@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1583997257840.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2513201499",
+    "id" : "65BF6F6F",
+    "lastKnownWriteTime" : 1583997285,
+    "last_content_update" : 1583997285268,
+    "path" : "~/GitHub/thesis/ntuthesis-master/project_name/01-install-compile.Rmd",
+    "project_path" : "01-install-compile.Rmd",
+    "properties" : {
+        "cursorPosition" : "26,0",
+        "scrollLine" : "22"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
