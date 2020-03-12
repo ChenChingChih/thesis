@@ -1,0 +1,1325 @@
+\documentclass[12pt]{article}  % 12pt means font size
+%\usepackage{CJKutf8}  % For Chinese typing\\
+\usepackage{amsmath, amssymb, amsthm}  % For mathematical symbols
+\usepackage[a4paper, top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry}  % This is the standard setting of thesis of NTHU. Do not change it.
+\usepackage{rotating, booktabs}  % For table-rotating 
+%\usepackage{showlabels}
+\usepackage{wallpaper}  % For watermark
+\CenterWallPaper{.18}{nthu-logo.jpg}  % Watermark of NTHU
+%\usepackage{showlabels}  % When there are many equations in your thesis, it is a good tool to show them before printing the labels out. But remember comment it when you finish your thesis.
+\usepackage{setspace}
+\usepackage[a4paper, top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry}  % This is the standard setting of thesis of NTHU. Do not change it.
+\linespread{2}  % The linespread is 1.5.
+\newtheorem{thm}{Theorem}[section]  % Define new theorem.
+\newtheorem{alg}{Algorithm}[section]  % Define new algorithm.
+\theoremstyle{plain}
+\usepackage{apacite}
+%\usepackage[citestyle=numeric]{biblatex}
+\usepackage{fontspec}   %加這個就可以設定字體
+\usepackage{xeCJK}       %讓中英文字體分開設置
+\setCJKmainfont{標楷體} %設定中文為系統上的字型，而英文不去更動，使用原TeX字型
+\newCJKfontfamily\Kai[AutoFakeBold=3,AutoFakeSlant=.4]{標楷體}
+\XeTeXlinebreaklocale "zh"             %這兩行一定要加，中文才能自動換行
+\XeTeXlinebreakskip = 0pt plus 1pt     %這兩行一定要加，中文才能自動換行
+\usepackage{indentfirst}
+\usepackage{enumerate}
+\usepackage{csvsimple}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{graphicx} %use graph format
+\usepackage{subfigure}
+\usepackage{caption}
+
+
+\renewcommand\tablename{表}
+\renewcommand\contentsname{目錄}
+\renewcommand\figurename{圖}
+\makeatletter
+\newcommand\specialsectioning{\setcounter{secnumdepth}{-2}}
+\newcommand\n{\mbox{\qquad}}
+\makeatother
+%\newcommand\n{\mbox{\qquad}}
+\begin{document}
+%\begin{CJK}{UTF8}{cwku}  % For Chinese typing
+\begin{titlepage}  % Titlepage
+\begin{center}
+\Large 國立清華大學\\
+\Large 碩士論文\\
+\vspace*{12ex}
+\Kai{\Large 標題}
+\vspace*{3ex}
+\begin{spacing}{1.3}
+\textbf{\Large title}\\
+\end{spacing}
+\vspace*{18ex}
+\end{center}
+
+
+\begin{spacing}{1.3}
+\hspace*{1cm}
+\begin{minipage}[h]{\textwidth}
+\raggedright
+\Large 所\qquad 別\quad \underline{統計學研究所} \\
+\Large 組\qquad 別\quad \underline{工業統計組} \\
+\Large 指導教授\quad \underline{黃榮臣\: 博士(Longcheen Huwang, Ph.D.)}\\
+\Large 姓\qquad 名\quad \underline{李彥儒(Yan-Ru Lee)}\\
+\Large 學\qquad 號\quad \underline{107024504}
+\vspace{6ex}
+\end{minipage}
+\end{spacing}
+
+\begin{center}
+\Large 中華民國一百零九年月
+\end{center}
+
+\end{titlepage}
+
+
+\newpage  % Independent page
+\pagenumbering{roman}
+\begin{center}
+\Kai{\large 摘要 }
+\end{center}
+\qquad 在科技發達的現代，為了使產品有著良好的品質，監控其壽命便是一項重要的議題。現今工業界常以韋伯分布來描述產品的壽命，因此如何監控韋伯分布的形狀參數和尺度參數成為了研究的重點。在既有的文獻中大多專注在完整資料的單一參數變化。在本文中我們利用了兩個現有的舒華特管制圖的監控統計量，構造出能同時監控韋伯分佈雙參數的EWMA管制圖和AEWMA管制圖。我們著重於型二設限資料，且引入變動抽樣區間的想法來幫助監控。透過統計模擬的技巧來對管制圖的效率進行評估，並用改正管制界線去修正第一階段資料的估計誤差。最後我們將提出的方法應用於一份碳纖維拉扯強度資料來說明實務上的運用和表現。
+
+
+\newpage
+\begin{center}
+\Kai{\large Abstract }
+\end{center}
+\quad   
+%
+%
+\newpage  % Independent page
+%
+\begin{center}
+\Kai{\large 誌謝辭 }
+\end{center}
+\qquad 能順利完成這篇論文，首先我要感謝我的指導教授黃榮臣老師，老師在我研究遇到瓶頸時對我的耐心指導，同時也給我大量的空間能發揮學習，在跟隨老師的過程中讓我體悟到正確的研究方法與待人處事的態度。接著我要感謝我的口試委員1111教授及1111教授提供給我的寶貴意見。也感謝清大統計所每位老師的教誨，讓我學習到扎實的專業知識以及不畏艱難的態度。
+
+此外，我也特別感謝所上的同班好友，在我遇到困難時能給我幫助，不論在學業或生活上都盡力幫我解決問題，感謝他們陪我度過碩班生涯的兩年光陰。最後，我要感謝我的家人在背後的支持，使我能心無旁騖的專心研究，這篇碩士論文是因為有你們的幫助才能完成。
+
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}  % Use arabic numbers when the main body starts.
+\specialsectioning
+\section{\Kai{第一章\quad 緒論}}
+\subsection{\Kai{1.1\quad 管制圖的簡介}}
+在科技進步的現代，眾多現代化的產品充斥在我們的周遭。舉凡電腦、手機等高科技產品，已經對人類的生活有著難以取代的地位。然而隨著時代的演進，對產品的要求已不同於早期只重視數量，現代的人們更重視產品的品質和使用年限。因此，如何製造出一個具有優良品質的商品以博取消費者的青睞，便是製造商所即須面對的一大問題。對工廠而言，要能生產出品質良好的商品，首要的工作便是先擁有穩定的製程。有了穩定的製程才能確保生產出的產品有著一定的規格，也能減低生產的失敗率並達到利潤的最大化。要監控一個製程是否穩定，我們經常會在不同的時間點去蒐集產品的資訊，並以此來評估出一個製程的現況，這種資訊就被稱為品質特徵 (quality characteristic)。當產品的品質特徵有著異於過往的趨勢，很可能就是生產的製程產生了變化，所以藉由對品質特徵的監控，我們能夠即時發現問題的所在以避免無謂的損失。在統計分析中，統計製程管制 (statistical process control，簡稱SPC)是一門藉由降低製程變異，以增進製程效率的學問，所包含的七大手法都是在實務上所常見的分析技巧。本文採用其中最常被使用的管制圖 (control chart)來進行討論。
+
+管制圖最早由舒華特(Shewhart)博士在1924年提出，其基本概念是在每個時間點去蒐集產品的品質特徵，根據特定的方式計算出監控統計量，利用與管制上限(upper control limit，簡稱UCL)和管制下限(lower control limit，簡稱LCL)的比較結果來進行監控。當監控統計量的觀測值位在管制界線的區域內，我們認為此製程是在管制狀態(in control)下，代表製程是穩定的，可以持續進行生產。反之若監控統計量的觀測值位在管制界線的區域外，則我們認定此製程已是失控狀態(out of control)，此時應立即停止生產並檢查機台的狀況，等找出問題的所在並排除後再開始新的製程。
+
+舒華特管制圖常用在偵測製程是否有較大的變動，然而當製程僅是小幅度的變化時，舒華特管制圖便顯得較無效率。究其原因是舒華特管制圖只考慮當下時間點的產品資訊，因此較不容易偵測出微小的變化。為了改善這種情況，先後有Page (1954) 所提出的累積和(cumulative sum，簡稱CUSUM)管制圖以及Roberts (1959) 所提出的指數加權移動平均(exponentially weighted moving average，簡稱EWMA) 管制圖。他們最大的改變是在監控的過程中還多加入過往的產品資訊，因此在偵測製程是否有較小的變化時會比舒華特管制圖來的更有效率。
+
+\subsection{\Kai{1.2\quad 研究動機與目的}}
+在可靠度分析中我們會將產品壽命視為一種品質特徵來進行監控，而韋伯(Weibull)分佈正好對壽命資料有著不錯的描述，因此監控產品的壽命變化就可轉為監控韋伯分佈的雙參數變化。在既有的文獻中大多是在研究如何用管制圖去監控韋伯分佈的形狀 (shape)參數，例如Pascual (2010) 提出兩種EWMA 管制圖來監控韋伯分佈的形狀參數，Pascual 和Li (2012) 利用型二設限(type II censoring)樣本的全距來監控韋伯分佈的形狀參數，以及Guo，Wang和Xie (2014) 提出利用設限資料來監控韋伯分佈的形狀參數。對比於韋伯形狀參數的監控研究，在韋伯尺度 (scale)參數的關注方面則較為稀少。我們知道不同的形狀參數會對產品壽命的機率密度函數有很大的影響，然而尺度參數的改變也會對產品壽命的平均值、標準差以及危險(hazard)函數造成可觀的變化，所以也必需監控尺度參數來確保它的穩定。因此，如何構造出一個有效率的管制圖來監控韋伯分佈的雙參數一直是學界的熱門議題。在本文中我們會建構出能同時監控韋伯分佈雙參數的EWMA管制圖及調適的EWMA (adaptive EWMA，簡稱AEWMA)管制圖，並引入變動抽樣區間(variable sampling interval，簡稱VSI)的想法，進一步創造出所謂的EWMA VSI和AEWMA VSI管制圖。我們期望新的管制圖能更快速的偵測出韋伯分佈的參數變化，以達到即時停機檢查的目的。
+
+\newpage
+\section{\Kai{第二章\quad 監控韋伯分佈的雙參數}}
+本章我們首先回顧兩個現已使用於監控韋伯分佈雙參數之舒華特管制圖的監控統計量，我們將以這兩個統計量為基礎建構出EWMA管制圖，並引入變動抽樣區間的概念來對剛建構好的EWMA管制圖做出不同的變化，最後再針對使用了變動抽樣區間的EWMA管制圖做更進一步的改善，使建立的管制圖能有更好的效率。假設產品失效時間$X$服從一形狀參數為$\beta$、尺度參數為$\eta$的韋伯分佈，記為$X$ $\sim$ $Wei(\beta,\eta)$，則其機率密度函數(probability density function)為
+\begin{align*}
+f{\left(x;\beta ,\eta \right) }=\dfrac {\beta x^{\beta -1}}{\eta ^{\beta }}e^{-\left( \dfrac {x}{\eta }\right) ^{\beta }},x>0,\beta>0,\eta>0 \mbox{。}
+\end{align*}
+在本章中，我們所提出的新管制圖是能夠同時對韋伯分佈的雙參數$\beta$與$\eta$來進行監控。
+
+
+\subsection{\Kai{2.1\quad 文獻回顧}}
+我們將利用Gou、Wang和Xie (2014)所提出的統計量$T_1$以及Gou和Wang (2014) 所提出的統計量$T_2$來作為建構管制圖的方法以進行韋伯分佈雙參數的監控。統計量$T_1$和$T_2$將在下面詳述，其中統計量$T_2$跟尺度參數$\eta$無關。假設
+$X_{i,\left( 1\right)}\leq$ $X_{i,\left( 2\right)}\leq$ $\ldots$ $\leq$ $X_{i,\left( r\right)}$為一組樣本數為$n$，在第$i$個抽樣時間點，$i=1,2,3$,$\ldots$，從韋伯分佈抽取的型二設限有序觀測值，其中$r$為一預先設定好的正整數，$1\leq r\leq n$。定義統計量
+\begin{align}
+T_{1,i} &= \dfrac{2\left [\sum^{r}_{j=1}X^{\beta _{0}}_{i,\left( j\right)}+\left( n-r\right)X^{\beta _{0}}_{i,\left( r\right)}\right ]}{\eta ^{\beta_0}_{0}} \mbox{，}\\
+T_{2,i} &= 2\sum^{r-1}_{k=1}log\dfrac{\sum^{r}_{j=1}X^{\beta _{0}}_{i,\left( j\right)}+\left( n-r\right)X^{\beta _{0}}_{i,\left( r\right)}}{\sum^{k}_{j=1}X^{\beta _{0}}_{i,\left( j\right)}+\left( n-k\right)X^{\beta _{0}}_{i,\left( k\right)}}\mbox{，}
+\end{align}
+其中$\beta_0$和$\eta_0$對應到韋伯分佈雙參數$\beta$和$\eta$的真實值。當韋伯分佈的雙參數沒有發生變化時，則(1)式及(2)式之統計量經過推導可證明$T_{1,i}\sim\chi^2_{2r}$和$T_{2,i}\sim\chi^2_{2r-2}$ (推導過程見Gou、Wang和Xie (2014)以及Gou和Wang (2014))。
+
+
+\subsection{\Kai{2.2\quad 固定抽樣區間管制圖}}
+固定抽樣區間(fixed sampling intervals ，簡稱FSI)管制圖是一種較為傳統的管制圖。傳統管制圖在構造時會選擇固定的時間間隔，以相同的抽樣頻率來進行設計，也就是說管制圖會在固定的時間點，每隔一單位的時間來進行取樣，而單位時間的長短取決於使用者的設定。為了要客觀的評判管制圖的優劣，現今公認的方法是比較在偵測到失控警訊之前平均需要抽多少次樣本，我們把第一次超出管制界線所需要的抽樣次數定義為連串長度(run length)，這也代表著偵測到失控警訊時所抽取的樣本次數。在監控過程中偵測到的失控警訊主要有兩種，一種是製程在管制狀態但管制圖的觀測值卻超出管制界線，這種狀況下的次數期望值就稱為管制狀態平均連串長度(in-control average run length，簡稱ARL$_0$)，另一種則是製程在失控狀態且管制圖的觀測值超出管制界線，這種狀況下的次數期望值就稱為失控狀態平均連串長度(out-of-control average run length，簡稱ARL$_1$)。通常我們構造的管制圖會先配上適當的管制界線使得管制圖的真實(true)ARL$_0$達到事先所設定名義上(nominal)的值，之後再去觀察ARL$_1$的數值，若是一個管制圖有較小的ARL$_1$，則此FSI管制圖會被認為是較有效率的。
+
+為了構造出監控韋伯分布雙參數的EWMA管制圖，我們首先將(1)式和(2)式這兩個統計量做以下的轉換
+\begin{align}
+N_{1,i}&=\Phi^{-1}[F_{2r}(T_{1,i})] \mbox{，}\\
+N_{2,i}&=\Phi^{-1}[F_{2r-2}(T_{2,i})]\mbox{，}
+\end{align}
+其中$\Phi^{-1}(\cdot{})$ 為標準常態分佈累積分佈之反函數，而$F_k(\cdot{})$為自由度$k$卡方分佈的累積分佈函數。經過轉換後的兩個統計量$N_{1,i}$與$N_{2,i}$在製程沒有發生變動的情況下均服從標準常態分佈，不但與樣本數$n$和設限數量$r$無關且透過統計模擬我們得出$N_{1,i}$與$N_{2,i}$是近似於獨立的，接著我們將(3)式與(4)式的統計量推廣到EWMA的型式，定義出
+\begin{align}
+EC_{1,i}&=\left(1-\lambda\right)EC_{1,i-1}+\lambda N_{1,i} \mbox{，}\\
+EC_{2,i}&=\left(1-\lambda\right)EC_{2,i-1}+\lambda N_{2,i}\mbox{，}
+\end{align}
+$i=1,2$,$\ldots$。這時$N_{1,i}$及$N_{2,i}$為(3)式與(4)式所定義的統計量，$\lambda$為EWMA 管制圖的平滑常數(smoothing constant)，$0 < \lambda \leq 1$，而起始值為$EC_{1,0}=EC_{2,0}=0$。當$EC_{1,i}>h$或$EC_{1,i}<-h$或$EC_{2,i}>h$或$EC_{2,i}<-h$時，代表製程在第$i$個抽樣時間點前已經發生改變。為了把兩種管制圖進一步合併成一個以方便監控，我們參考Chen、Cheng和Xie (2001)所提出的方法，引入了Max chart的觀念，定義
+\begin{align}
+M_{i}&=max\left\{|EC_{1,i}|,|EC_{2,i}|\right\}\mbox{，}
+\end{align}
+藉由上述公式的轉換，當$M_{i}>h$時我們將判斷製程處於失控狀態，需要立即停止運作並找出發生改變的來源，等排除問題後再重新開始生產。上述所提到的管制界線$h$須符合事先所給定的管制狀態平均連串長度ARL$_0$，我們將在3.1節中透過統計模擬的方式來得到的管制界線常數$h$。
+
+\subsection{\Kai{2.3\quad 變動抽樣區間管制圖}}
+為了對管制狀態下的資料做更詳細的分析以增進製程的效率，Reynolds, Amin及Arnold (1990)對傳統累積和管制圖引入了變動抽樣區間的想法，其概念是在原本的管制界限之間再多加上兩條警戒界限(warning limit)。此時位於管制界限內的監控統計量之觀測值又可再細分為兩類，一類是觀測值位在警戒界限內，這時我們認為製程處於穩定狀態，可以減少抽樣的頻率來降低成本，因此放寬抽樣的時間間隔。另一類則是觀測值位在管制界限內但已超出警戒界限，這時我們認為製程處於不穩定狀態，隨時可能會失控，因此需要增加抽樣的頻率來加強監控，利用縮短抽樣的時間間隔來達到及早發現異狀的目的。
+       
+不同於傳統FSI管制圖，VSI管制圖在偵測到失控警訊時會同時記錄已抽取的樣本次數和已經過的時間，因此在建構VSI管制圖時我們要先定義兩個指標: 1. 發出警訊平均樣本數量(average number of sample to signal，簡稱ANSS)，代表VSI管制圖在偵測到失控警訊前平均需要抽取多少樣本數; 2. 發出警訊平均時間(average time to signal，簡稱ATS)，代表VSI管制圖平均需要多少時間才能偵測到失控警訊。建構VSI管制圖的最大重點在於給定合適的抽樣區間，一般以$d_1$及$d_2$ $(0<d_1 \leq d_2)$來代表抽樣間隔的時間長度，此外我們以$\rho_1$及$\rho_2$來表示在偵測到警訊前$d_1$及$d_2$所平均使用到的次數。另外，習慣上會將第一次抽樣的時間長度額外設為$d_0$來分開討論。我們可以把上述的定義整理成
+\begin{align}
+\mbox{ANSS} &=1+\rho_1+\rho_2
+\end{align}
+及
+\begin{align}
+\mbox{ATS} &=d_0+d_1 \rho_1+d_2 \rho_2 \mbox{。}
+\end{align}
+一般而言$d_0$是隨著使用者的偏好來進行設定，但實務上我們會給定$d_0=d_1$，代表著我們希望製程開始後可以及早接受監控。類似於FSI管制圖利用連串長度來記錄偵測到失控警訊時所抽取的樣本次數，我們對VSI管制圖也定義了發出警訊時間(time to signal，簡稱TS)，表示了監控統計量第一次發出失控警訊所需要的時間。同時我們也仿效FSI管制圖的手法，對於製程處於管制狀態但發出失控警訊的時間期望值定義為管制狀態下發出警訊平均時間 (in-control average time to signal，簡稱ATS$_0$)，而製程已在失控狀態所發出失控警訊的時間期望值則稱為失控狀態下發出警訊平均時間(out-of-control average time to signal，簡稱ATS$_1$)。我們會事先設定好名義上的ATS$_0$，代表著我們所能忍受的假警訊平均時間，之後再找尋適當的警戒界線來使得真實的ATS$_0$與名義上的ATS$_0$相吻合，最後再去觀察管制圖的ATS$_1$。如同FSI管制圖的觀點，我們希望在相同的ATS$_0$下能有小的ATS$_1$，這表示在較短的時間內就能偵測出製程的失控。
+
+為了能公正地對兩個VSI管制圖做出評比，通常的方法是先固定住管制狀態時的ANSS (簡稱ANSS$_0$)及ATS$_0$，再去比較在失控狀態下，哪一個管制圖能有較小的ANSS$_1$或ATS$_1$，一般我們就認為此管制圖是有較好的效率。此外FSI管制圖和VSI管制圖有一定的相關性，當考慮$d_1=d_2$的情形時，可以發現到這時VSI管制圖會簡化成傳統的FSI管制圖，因為在抽樣區間都已相同的情況下，ATS是正比於ANSS，且在製程穩定下管制圖發生警訊的平均抽樣次數需事先給定，因此我們可以推出在製程穩定且已先設定好管制界限的情況下ARL$_0$跟ANSS$_0$是相同的。
+
+我們將VSI的概念引入(5)式及(6)式所定義的$EC_{1,i}$及$EC_{2,i}$，$i=1,2$,$\ldots$,，建構出了EWMA VSI管制圖，同時也使用了Max chart的技巧推出(7)式來將兩式合併成單一的管制圖。綜合來說，藉由一個EWMA VSI管制圖，我們就能夠同時監控韋伯分布的形狀參數$\beta$及尺度參數$\eta$。而在監控的過程中，依照監控統計量的觀測值坐落之位置，我們能將其區分成三種情況:
+\begin{enumerate}
+\item 當$M_{i}>h$時，則管制圖偵測到失控警訊，其中$h$為管制界限。
+\item 當$g \leq M_{i} \leq h$時，此時以長度$d_1$作為抽樣區間來進行抽樣，其中$g$為警戒界限。
+\item 當$0 \leq M_{i}<g$時，此時則以長度$d_2$作為抽樣區間來進行抽樣。
+\end{enumerate}
+上述的警戒界限$g$須符合事先所給定的ATS$_0$，我們將在3.2節中利用統計模擬的方式來得到警戒界限常數$g$
+
+\subsection{\Kai{2.4\quad 調適的EWMA 變動抽樣區間管制圖}}
+對EWMA管制圖而言平滑常數$\lambda$是一個決定性的參數，它的設定會直接影響到管制圖的偵測效率。當我們把$\lambda$的值設定較大，管制圖能較快速的去偵測到較大的製程參數變動，反之若$\lambda$的值設定較小，則管制圖在偵測較小的製程參數變化上會有較好的效率。由於單一的$\lambda$無法兼顧各種不同的偏移量，因此我們希望能改善傳統EWMA管制圖的這項缺失，讓創造出的管制圖在面對不同的偏移量下都能有更佳的監控效果。我們參考Haq、Gulzar和Khoo (2018)及Haq (2018)中所提出的方法，並與變動抽樣區間的概念進行搭配。有鑒於固定的$\lambda$無法顧及全部的偏移量，我們將$\lambda$轉變為一可變動的函數，藉由在不同時間點下的抽樣結果去估計出製程參數的偏移量大小，進而決定在不同的偏移量下需要使用多大的權重。如此一來，我們就能經由樣本來隨時調整我們的$\lambda$，讓構造的EWMA管制圖能更有效率去偵測出各種製程參數的變化。
+
+依照上述的想法，我們必須先建立出用來估計偏移量的統計量，使我們在不同時間點下抽樣後都能以此來評估製程參數的變化大小，進而挑選出合適的$\lambda$來進行監控。根據Haq、Gulzar和Khoo (2018)與Haq (2018)的方法，我們在建構管制圖前須設定一平滑常數$\psi$，$0<\psi \leq 1$，並先計算以下的EWMA統計量
+\begin{align}
+\widehat{\delta}^*_{i}=\psi Y_i+\left(1-\psi\right) \widehat{\delta}^*_{i-1} \mbox{，}
+\end{align}
+其中Y$_i$為第$i$個時間點的觀測值，$i=1,2,\ldots$,且起始值$\widehat{\delta}^*_{0}=0$。經由推導發現，雖然$\widehat{\delta}^*_{i}$在管制狀態時為平均數的不偏估計量，但是只要參數改變使製程處於失控狀態，$\widehat{\delta}^*_{i}$在估計平均數時便會產生偏誤(biased)。Haq為了克服這個問題，將$\widehat{\delta}^*_{i}$做出調整並定義出新的統計量
+\begin{align}
+\widehat{\delta}^{**}_{i}=\dfrac{\widehat{\delta}^*_{i}}{1-\left(1-\psi\right)^i} \mbox{，}
+\end{align}
+我們在此假設當製程在管制狀態時Y$_i \sim N(0,1)$，而當製程在失控狀態下\\Y$_i$ $\sim$ N($\delta$,1)，$\delta \neq 0$，也就是常態分佈的平均值發生偏移。接著我們對新統計量$\widehat{\delta}^{**}_{i}$取期望值發現
+\begin{align*}
+E(\widehat{\delta}^{**}_{i})&=\dfrac{E(\widehat{\delta}^*_{i})}{1-\left(1-\psi\right)^i}\\
+&=\dfrac{1}{1-\left(1-\psi\right)^i} \left(\psi \sum^{i-1}_{t=0}\left(1-\psi\right)^{t} E(Y_{i-t})+\left(1-\psi\right)^i \widehat{\delta}^*_{0}\right)\\
+&=\dfrac{1}{1-\left(1-\psi\right)^i} \left(\psi \sum^{i-1}_{t=0}\left(1-\psi\right)^{t} E(Y_{i-t})\right)\\
+&=\dfrac{1}{1-\left(1-\psi\right)^i} \left(\psi \dfrac{1-\left(1-\psi\right)^i}{\psi} \right)  \mu \\
+&= \mu \mbox{，}
+\end{align*}
+由此可知，當平均數沒有產生改變時，$E(\widehat{\delta}^{**}_{i})=\mu=0$，反之若平均數發生變化，則$E(\widehat{\delta}^{**}_{i})=\mu=\delta $，也正好等於失控狀況下的平均數，也就是說不論製程處於何種狀態，$\widehat{\delta}^{**}_{i}$皆為製程平均數的不偏估計量。此外，我們也能藉由$\widehat{\delta}^{**}_{i}$的正負號推估出平均數的增減，若$\widehat{\delta}^{**}_{i}>0$代表平均數為正偏移，而$\widehat{\delta}^{**}_{i}<0$表示平均數為負偏移。在這裡我們只考慮偏移量的數值大小，因此我們加上絕對值並定義   
+\begin{align}
+\tilde{\delta}_i=\left|\widehat{\delta}^{**}_{i}\right| \mbox{，}
+\end{align}
+之後將以此來估計$\delta$的大小。在第$i$個時間點得到$\tilde{\delta}_i$的估計值後，就可選擇合適的權重使管制圖能及早偵測出參數變動，因此我們將傳統EWMA管制圖的平滑常數$\lambda$改為$\theta(\tilde{\delta}_i)$，代表著每一步的權重會隨著觀測值的大小來改變。我們將$\theta(\tilde{\delta}_i)$定義成
+\[\theta(\tilde{\delta}_i) =
+\begin{cases}
+0.015 ,& \mbox{ $0.00< \tilde{\delta}_i \leq 0.25$}, \\
+0.10 ,& \mbox{ $0.25< \tilde{\delta}_i \leq 0.75$},\\
+0.20 ,& \mbox{ $0.75< \tilde{\delta}_i \leq 1.00$},\\
+0.25 ,& \mbox{ $1.00< \tilde{\delta}_i \leq 1.50$},\\
+0.50 ,& \mbox{ $1.50< \tilde{\delta}_i \leq 2.50$},\\
+0.80 ,& \mbox{ $2.50< \tilde{\delta}_i \leq 3.50$},\\
+1.00 ,& \mbox{ $3.50 < \tilde{\delta}_i $} 
+\mbox{。}\end{cases}\]
+其中$\theta(\tilde{\delta}_i)$的決定主要是先固定住平均數偏移的區間，之後用傳統的EWMA管制圖透過模擬的方式計算出在不同平滑常數下之失控狀態平均串聯長度ARL$_1$，然後從中挑選出在各個平均數偏移區間內近似最佳的平滑常數來作為各區間所對應到的權重，因此當估計量$\tilde{\delta}_i$落在何者區間內，那個時間點下我們就用所代表的$\theta(\tilde{\delta}_i)$來當作權重。我們把傳統的EWMA管制圖結合上$\theta(\tilde{\delta}_i)$的想法改寫成
+\begin{align}
+W_i = \theta(\tilde{\delta}_i) Y_i + \left[1-\theta(\tilde{\delta}_i)\right] W_{i-1} \mbox{，}
+\end{align}
+其中$W_0=0$, $\theta(\tilde{\delta}_i) \in (0,1)$，至此我們建構出調適的EWMA管制圖。與傳統的EWMA管制圖相比，可變化的權重會讓管制圖更加靈活，藉由觀測值的輔助能更準確的估計出偏移量的大小，此外$\theta(\tilde{\delta}_i)$也反映出權重隨著偏移量增加而變大，這也與傳統的EWMA管制圖相符，越大的權重會較擅長偵測越大的偏移量。最後我們將$\theta(\tilde{\delta}_i)$與前面所提出的(3)式和(4)式監控統計量相融合，建構出所謂的AEWMA管制圖，其形式為
+\begin{align}
+W_{1,i}&=\theta(\tilde{\delta}_{1,i}) N_{1,i} + \left[1-\theta(\tilde{\delta}_{1,i})\right] W_{1,i-1} \mbox{，}\\
+W_{2,i}&=\theta(\tilde{\delta}_{2,i}) N_{2,i} + \left[1-\theta(\tilde{\delta}_{2,i})\right] W_{2,i-1} \mbox{，}i=1,2,\ldots\mbox{，}
+\end{align}
+其中$W_{1,0}=W_{2,0}=0$，$\theta(\tilde{\delta}_{1,i})$及$\theta(\tilde{\delta}_{2,i})$為兩個定義與$\theta(\tilde{\delta}_i)$完全相同的權重。由於(3)式的統計量在韋伯分佈的形狀參數$\beta$及尺度參數$\eta$改變下都會造成平均數的偏移，且(4)式的統計量在韋伯分佈的形狀參數$\beta$變動下同樣也會造成平均數的偏移，因此可以使用檢測平均數偏移的技巧來衡量韋伯分佈雙參數的偏移大小，並套用在建構AEWMA管制圖上。同樣我們使用(7)式的技巧，用Max chart將兩個AEWMA管制圖併成一個來進行監控，此時
+\begin{align}
+M^*_{i}&=max\left\{|W_{1,i}|,|W_{2,i}|\right\}\mbox{，}
+\end{align}
+當$0 \leq M^*_{i}<g^*$時，代表製程處於較為穩定的狀態，此時以長度$d_2$作為抽樣區間來進行抽樣，而當$g^* \leq M^*_{i} \leq h^*$時，代表製程不太穩定隨時會失控，因此以較短的抽樣區間$d_1$來進行抽樣，最後若$M^*_{i}>h^*$時，表示製程已在失控狀態，可能在第$i$個時間點前雙參數就已經發生變動，所以需要停機檢查並找出造成製程變異的原因，等排除障礙後再繼續製程的進行。上述所提及的管制界線$h^*$為在管制狀態時滿足給定的ARL$_0$值的常數，而警戒界線$g^*$為在管制狀態時滿足給定的ATS$_0$值的常數，我們會分別在3.1節和3.2節中透過統計模擬的方式來得出管制界線$h^*$以及警戒界線$g^*$
+
+\newpage
+\section{\Kai{第三章\quad 管制圖的比較}}
+在本章，我們將會在3.1節中描述如何利用馬可夫鍊(Markov chain)方法及線性內插法尋找所提出的EWMA管制圖的管制界限$h$，以及使用統計模擬方法及線性內插法求得所提出調適的EWMA管制圖的管制界限$h^*$。在3.2節中描述如何使用統計模擬方法及線性內插法獲得EWMA VSI管制圖的警戒界限$g$及AEWMA VSI管制圖的警戒界限$g^*$，然後藉由管制界限與警戒界限來建構出相對應的VSI管制圖。在3.3節中，我們將所提出的方法與一些現有的統計量進行比較，在不同的失控狀態下去衡量管制圖各自的ARL$_1$值，藉以評估何者方法有較佳的監控效率。最後在3.4節我們會加入EWMA VSI管制圖，藉著固定ANSS$_0$=ARL$_0$=ATS$_0$來讓每個管制圖有相同的基準點，之後再比較失控狀態下EWMA FSI管制圖、EWMA VSI管制圖和AEWMA VSI管制圖的ATS$_1$，並以此來觀察出使用了VSI和調適的管制圖之功效。
+
+
+\subsection{\Kai{3.1\quad 管制界限}}
+在2.2節中我們提到管制界限$h$為滿足給定管制狀態平均連串長度ARL$_0$的一個常數，然而理論上有無限多組的管制界限組合可以達到事先設定的ARL$_0$。由於我們所使用的兩個統計量在管制狀態下均為標準常態分佈，因此我們想要在眾多組合中選取一組上下對稱的管制界限$h$與$-h$，除了考慮到擁有在零點對稱的特性外，在最後用Max chart進行管制圖合併時也能將雙邊的$(-h,h)$簡化成單邊的$(0,h)$。在求出$h$的方法上我們使用了Saccucci 及 Lucas (1990)所提出的馬可夫鍊方法，首先給定$h\in \mathbb{R}$為任一常數，將造出的管制界限區間$(-h,h)$切割成$M$等分(本文使用$M=200$)，並定義每個子區間的區間長為$2k$，$k>0$。接著我們要構造出馬可夫鍊的轉移矩陣(transition matrix)$R=(p_{ij})$，它是一$M\times M$的矩陣，其元素$p_{ij}$代表著從遞移狀態(transient state)$i$轉移到遞移狀態$j$的轉移機率(transition probability)。上述的遞移狀態就是我們所切割的各個子區間，套用上(5)式及(6)式所得出的$EC_{1,i}$、$EC_{2,i}$，我們定義出
+\begin{align}
+S_j-k< EC_{1,i} \leq S_j+k,j=1,2,\cdots,M \mbox{，}\\
+S_j-k< EC_{2,i} \leq S_j+k,j=1,2,\cdots,M \mbox{，}
+\end{align}
+代表著$EC_{1,i}$與$EC_{2,i}$在第$i$個時間點處於遞移狀態$j$，其中$S_j$為第$j$個子區間的中點；當$EC_{1,i}$與$EC_{2,i}$超出管制界限成失控狀態時，對應到的馬可夫鍊也會落入吸收狀態(absorbing state)，其特點就是落入吸收狀態後就不會再轉移到其他的遞移狀態，這也符合我們用管制圖偵測出失控警訊後，會停止製程而不是繼續進行的準則。由於我們使用的統計量$N_{1,i}$、$N_{2,i}$有著標準常態分佈的特質，因此在計算轉移機率上可以利用Saccucci and Lucas (1990)所提到的方法
+\begin{equation}
+p_{ij}=\Phi\left[\frac{(S_j+k)-(1-\lambda)S_i}{\lambda}\right]-\Phi\left[\frac{(S_j-k)-(1-\lambda)S_i}{\lambda}\right]
+\end{equation}
+來近似，其中$\Phi(\cdot)$為標準常態分佈的累積分佈函數而$\lambda$為(5)式及(6)式中的平滑常數，最後就能使用建構好的轉移矩陣來計算出在特定$h$下EWMA管制圖的ARL$_0$。我們利用到ARL$_0$與起始值的相關性，知道若以第$j$個遞移狀態作為初始值，則EWMA管制圖之ARL$_0$可以用$(I-R)^{-1}~\mathbf{1}$的第$j$個元素來近似，其中$I$為$M\times M$的單位矩陣，而$\mathbf{1}$為一個長度為$M$且全部元素為1的向量。若要讓估計的ARL$_0$更接近真實值，可以藉由讓$M$增加以造出更多的子區間來達成。由於我們在(5)式及(6)式中所設定的起始值$EC_{1,0}=EC_{2,0}=0$，因此在利用管制界限$(-h,h)$所切割的$M$個子區間中，我們希望找到一個子區間滿足$S_j=0$。若此$S_j$存在，根據上述我們會將$(I-R)^{-1}~\mathbf{1}$的第$j$個元素當作管制圖ARL$_0$的近似值，反之若$S_j\neq 0,j=1,2,\cdots,M$，則我們會用線性內插法來做逼近。首先找出0被包夾於哪兩個子區間，假設其對應的遞移狀態中點為$S_t$及$S_{t+1}$，之後就能套用線性內插法
+\begin{equation}
+\left[(I-R)^{-1}~\mathbf{1}\right]_t-\frac{S_t}{S_{t+1}-S_t}\left\{
+\left[(I-R)^{-1}~\mathbf{1}\right]_{t+1}-
+\left[(I-R)^{-1}~\mathbf{1}\right]_t\right\}
+\end{equation}
+來近似初始值為0的ARL，其中$\left[(I-R)^{-1}~\mathbf{1}\right]_t$為
+$(I-R)^{-1}~\mathbf{1}$的第$t$個元素。在得出特定管制界線$h$下EWMA管制圖的ARL後，我們就能將$h$進行變動已達到我們所設立的名義ARL$_0$，其方法如下:
+\begin{enumerate}
+\item 固定單一管制圖之ARL$_0 = 1000$;
+\item 給定一常數$\mu>0$使得馬可夫鍊方法在($-\mu$,$\mu$)得到的ARL $>1000$，再給定一常數$l>0$使得馬可夫鍊方法在($-l$,$l$)得到的ARL $<1000$;
+\item 利用線性內插法及馬可夫鍊方法所得到的ARL值來對管制界限$h$進行逼近，把依照內插法所得出的新管制界限值稱為$b$;
+\item 若由馬可夫鍊方法在($-b$,$b$)所計算出之ARL > 1000.5，就更新$b$為新的$\mu$值並重複第3步，反之若ARL < 999.5，則更新$b$為新的$l$值並重複第3步;
+\item 若由馬可夫鍊方法在($-b$,$b$)所計算出之ARL落在(999.5,1000.5)內，則停止更新並將得到的$b$當作管制圖之管制界限$h$。
+\end{enumerate}
+由於我們在建構EWMA FSI管制圖的最後使用了Max chart的技巧將2個管制圖合併成一個，因此原本的管制界限區間$(-h,h)$將可被省略成只有管制上界$h$。表1中我們列出在不同平滑常數$\lambda=0.05,0.1,0.2$，樣本數$n=10$和整體ARL$_0=500$下，使用Max chart的EWMA管制圖的管制界限$h$。由表1可以看出管制界限的範圍隨著平滑常數$\lambda$的增加而變大，且由於(3)式和(4)式是不依賴樣本數$n$及設限數量$r$，因此$h$只會跟所給定的ARL$_0$有關。在2.4節中，我們以$\theta(\tilde{\delta}_i)$來取代平滑常數$\lambda$當作AEWMA管制圖的權重，由於$\theta(\tilde{\delta}_i)$會隨著不同的抽樣結果在變化，因此既不為一固定數值，根據$\theta(\tilde{\delta}_i)$的定義也不是一對一的函數，所以無法同樣使用馬可夫鍊方法來計算ARL。因此這邊我們就改用統計模擬的方法，希望用大樣本的性質來逼近ARL$_0$所對應的真實管制界限$h^*$。我們將找取的方法成:
+\begin{enumerate}
+\item 固定單一管制圖之ARL$_0=100$;
+\item 給定一常數$\mu^* > 0$使得統計模擬得到的ARL $>1000$，再給定一常數$l^*>0$使得統計模擬得到的ARL $<1000$;
+\item 利用線性內插法及統計模擬得到的ARL值來對管制界限$h^*$進行逼近，把依照內插法所得出的新管制界限值稱為$b^*$;
+\item 若由統計模擬在($-b^*$,$b^*$)計算出之ARL > 1000.5，就更新$b^*$為新的$\mu^*$值並重複第3步，反之若ARL < 999.5，則更新$b^*$為新的$l^*$值並重複第3步;
+\item 若ARL落在(999.5,1000.5)內，則停止更新並將得到的$b^*$當作管制圖之管制界限$h^*$。
+\end{enumerate}
+其中ARL為透過20000次的統計模擬得到的值，最後在使用Max chart的技巧將管制區間$(-h^*,h^*)$簡化成只需要看單邊的$(0,h^*)$。表2列出在不同平滑常數$\psi=0.05,0.1,0.2$，樣本數$n=10$和整體ARL$_0=500$下，使用Max chart的AEWMA管制圖的管制界限$h^*$。由表2亦可發現AEWMA管制圖的管制界限的範圍隨著平滑常數$\psi$的增加而變大，且同樣與樣本數$n$及設限數量$r$沒有關係。此外當固定$\lambda$和$\psi$為同一數值時，把表1和表2對比發現AEWMA管制圖的管制界限$h^*$都會比EWMA管制圖的管制界限$h$來的大，代表著AEWMA管制圖有較寬的管制區間。
+
+\subsection{\Kai{3.2\quad 警戒界限}}
+在3.1節中我們找出管制界線並以此建構出FSI管制圖，同樣的找法也能應用在建構VSI管制圖上，然而我們還需要找出警戒界線才能完整構造出VSI管制圖。在設定好管制狀態下平均警訊時間ATS$_0$後，我們的目的是要找出固定常數$g$及$g^*$，使它們分別當EWMA VSI管制圖及AEWMA VSI管制圖的警戒界線時都能達到名義上的ATS$_0$。在2.3節中我們提到ARL$_0$與ANSS$_0$之間的相關性，因此我們首先會設定ANSS$_0$和ARL$_0$為同一固定的數值，讓不同的管制圖都能有相同的基準點，之後才去計算VSI管制圖的ATS$_1$與FSI管制圖的ARL$_1$來互相評判監控效率的優劣。由於FSI管制圖沒有考慮到時間這項資訊，因此我們可以設定FSI管制圖的抽樣區間為1，形成抽樣次數與抽樣時間相同的結果，得出ATS$_1$=ARL$_1$並用來與VSI管制圖進行比較。類似於找AEWMA管制圖的管制界線，我們主要用統計模擬的方式來求出警戒界線，其流程如下:
+\begin{enumerate}
+\item 固定抽樣區間長度$0<d_1 \leq d_2$;
+\item 固定單一管制圖之ARL$_0$ = ATS$_0$ = ANSS$_0$ = 1000;
+\item 給定一常數$g_1 > 0$使得統計模擬得到的ATS$>1000$，再給定一常數$g_2>0$使得統計模擬得到的ATS$<1000$;
+\item 利用線性內插法及統計模擬得到的ATS值來對警戒界限$g$進行逼近，把依照內插法所得出的新警戒界線值稱為$b$;
+\item 若由統計模擬所計算出之ATS > 1000.5，就更新$b$為新的$g_1$值並重複第3步，反之若ATS < 999.5，則更新$b$為新的$g_2$值並重複第3步;
+\item 若ATS落在(999.5,1000.5)內，則停止更新並將得到的$b$當作管制圖之警戒界限$g$。
+\end{enumerate}
+其中ATS為透過20000次的統計模擬得到的值，並同樣在最後才使用Max chart將其變為單邊警戒界線。表3及4分別列出在不同平滑常數$\lambda=0.05,0.1,0.2$，樣本數$n=10$，整體ANSS$_0$=ATS$_0$=500及$\psi=0.05,0.1,0.2$下，使用Max chart的EWMA VSI管制圖及AEWMA VSI管制圖的警戒界限。
+
+
+
+
+
+從表3我們可以發現當$d_1$越大或平滑常數$\lambda$變大時，EWMA VSI管制圖警戒界限(-$g$,$g$)就會越寬，這是因為當$d_1=d_2$時，警戒界限就會等於管制界限，亦即會簡化成原本的EWMA FSI管制圖。另外從表4我們亦觀察到當$d_1$越大或平滑常數$\psi$變大時，警戒界限(-$g^*$,$g^*$)就會越寬。
+
+\subsection{\Kai{3.2\quad 管制圖效率比較}}
+在比較管制圖的效率時，我們依據的是零狀態(zero state)的失控狀態平均連串長度ARL$_1$的大小，也就是假設在第二階段的線上(on-line)監控中，一開始時就發生製程參數的改變，因此我們將改變點$\tau$設為0。為了對EWMA FSI管制圖，EWMA VSI管制圖以及AEWMA VSI管制圖做比較，因此我們設定整體的ANSS$_0$=ATS$_0$=ARL$_0$=370，如此一來我們就可以比較FSI管制圖的ARL$_1$ (此時的ARL$_1$等於ATS$_1$)與VSI管制圖的ATS$_1$，並用它們來衡量管制圖效率的高低。在本文中，我們定義VSI管制圖的$d_0=d_1$且設定了三種不同的抽樣區間長度$(d_1,d_2)=(0.1,1.9),(0.25,1.5),(0.5,1.25)$來觀察在不同的抽樣區間長度監控效率會有那些差別。我們將針對韋伯分佈的形狀參數$\beta$及尺度參數$\eta$的改變來探討三種管制圖的效率，在進行管制圖的失控狀態平均警訊時間ATS$_1$模擬時，我們假設製程在管制狀態下的分佈服從$Wei(1.5,1)$，樣本數$n=5$，平滑常數的設定為0.05、0.1與0.2，而形狀參數$\beta$的設定為0.50、1.00、 1.25 、1.32、 1.40 、1.45 、1.50 、1.55 、1.60 、1.68 、1.75 、2.00 、2.50 、3.00 4.00 及5.00，而尺度參數$\eta$則設定為0.10、0.50 、0.75 、0.82 、0.90、 0.95 、1.00 、1.05 、1.10 、1.17 、1.25 、1.50 及2.00。由於我們設定了三種管制圖之整體ANSS$_0$=ATS$_0$=ARL$_0$=370，所以我們後面將針對三種管制圖的ATS$_1$做一個比較(此時FSI管制圖之ARL$_1$=ATS$_1$)。由於AEWMA VSI管制圖在計算監控統計量時，在每個時間點的權重可能會隨著偵測到製程參數偏移量的大小而有改變，所以我們預期AEWMA VSI管制圖在對製程參數不同偏移量下都會有不錯的效果，而傳統的EWMA FSI管制圖就只會在製程參數某些特定的偏移量時會有比較好的效果，因此我們會認為AEWMA VSI管制圖相較於EWMA FSI管制圖是一個較有效率的管制圖。然而在建構AEWMA VSI管制圖時不像在建構EWMA FSI管制圖能利用馬可夫鍊方法來找尋管制界限，而必須使用統計模擬的方式來尋找管制界限。
+
+在下面我們將比較EWMA FSI管制圖，EWMA VSI管制圖及AEWMA VSI管制圖，在此我們模擬了EWMA FSI管制圖在平滑常數$\lambda=0.05,0.1,0.2$下的ATS$_1$值，
+EWMA VSI管制圖在平滑常數$\lambda=0.05,0.1,0.2$及$(d_1,d_2)=(0.1,1.9),(0.25,1.5),(0.5,1.25)$下的ATS$_1$值，以及AEWMA VSI管制圖在給定平滑常數$\psi=0.05,0.1,0.2$及$(d_1,d_2)=(0.1,1.9)$下的ATS$_1$值。從表6到表8我們發現對於EWMA VSI管制圖及AEWMA VSI管制圖，當$d_1$越小，則ATS$_1$也會越小，所以在設定$d_1$ 及$d_2$ 時Reynolds, Amin 和 Arnold (1990) 建議$d_1$可以越小越好，而$d_2$的要求不需要太大，適當即可。從表5到表8可以得知EWMA VSI管制圖在製程參數偏移量較大的情況下的ATS$_1$都比EWMA FSI管制圖的ATS$_1$還要短許多，而EWMA VSI管制圖在製程參數偏移量較小的情況下的ATS$_1$比EWMA FSI管制圖的ATS$_1$短的情形就比較不明顯，整體而言，EWMA VSI管制圖對比EWMA FSI管制圖，基本上能以較短的時間偵測出製程發生變動。再來我們比較EWMA VSI管制圖及AEWMA VSI管制圖的監控效率，在這邊我們將固定在抽樣區間$(d_1,d_2)=(0.1,1.9)$及針對不同的平滑常數來討論。我們可以從表8到表9發現AEWMA VSI管制圖在不同情況下的ATS$_1$都比EWMA VSI管制圖的ATS$_1$短許多，因此代表AEWMA VSI管制圖的監控效率是比較好的。
+
+AEWMA VSI管制圖的平滑常數$\psi$值會對製程管制狀態下ATS$_0$的標準差及製程失控狀態下的ATS$_1$造成影響，我們可以發現AEWMA VSI管制圖在固定製程參數偏移量的情況下，當$\psi$值越小時，其ATS$_1$的表現會越好，反之亦然。不過AEWMA VSI管制圖在管制狀態下ATS$_0$的標準差則會隨著$\psi$變小而增加，當然我們不希望ATS$_0$的標準差值過大，因此在Haq、Gulzar及khoo (2018)中建議$\psi \geq 0.1$。另一方面，這三種管制圖在$\beta=1.55$、$\eta=1$還有平滑常數$\lambda=0.2$及$\psi=0.2$的情況下都會有偏差 (biased)的情況發生，這裡所謂的偏差現象是指管制圖的ATS$_1$比ATS$_0$還大的情形。並且EWMA VSI管制圖ATS$_1$偏差的情形比EWMA FSI管制圖ATS$_1$偏差的情形還要嚴重一些，而AEWMA VSI管制圖由於有考慮在每個時間點下製程參數偏移的情況，因此ATS$_1$偏差的情形會比EWMA FSI管制圖及EWMA VSI管制圖來得輕微。所以若是考慮管制圖建構的簡便性，我們可以考慮選用EWMA VSI管制圖，而如果是希望管制圖不會發生太大的偏差並且在參數不同偏移下都可以有好的監控表現，則可以考慮使用AEWMA VSI管制圖。因為AEWMA VSI管制圖有考慮在每個抽樣時間點下製程參數偏移的情況，與選取適當的平滑常數來計算監控統計量，就不會像傳統的EWMA FSI或EWMA VSI管制圖會因為平滑常數的不同導致在製程參數不同的偏移量下會有不一樣的表現。通常我們可以挑選一個不太會發生偏差的平滑常數來建構AEWMA VSI管制圖。舉例來說，由於$\psi=0.1$下不太會有偏差的問題產生，並且此種管制圖針對製程參數不同的偏移量都能有不錯的監控效果，因此我們可以選用在$\psi=0.1$下所建構的AEWMA VSI管制圖來對製程進行監控。如此一來，便可以解決原本EWMA FSI或EWMA VSI管制圖無法對製程所有的參數偏移都能有效的監控，以及當平滑常數太大時可能會造成管制圖偏差的問題。
+
+
+\newpage
+
+\section{\Kai{第四章\quad 實例分析}}
+在本章中，我們將會利用實際資料來說明如何應用EWMA FSI管制圖，EWMA VSI管制圖以及AEWMA VSI管制圖來同時監控韋伯分佈的雙參數。我們所使用的資料為Padgett 和 Spurrier (1990)所用的碳纖維拉扯強度資料，其數值列在表10中。因為我們不確定此筆資料是否服從韋伯分佈，所以我們要對此筆資料做適合度檢定。在確定沒有明顯的證據指出此筆資料不服從韋伯分佈後，我們把前十組的資料當作第一階段 (phase 1) 的資料，我們會用這十組資料來估計製程在管制狀態下的參數值，並以此來建構我們所提出的管制圖。然後我們將後十組當作第二階段的資料並利用三種不同的管制圖對它進行監控，之後再去比較三種管制圖需要耗費多少時間才偵測到失控警訊。
+
+首先我們先對此筆資料做母體適合度 (goodness of fit) 檢定，在這邊我們假設每組樣本的五個資料服從韋伯分佈，$X_{i,1},X_{i,2},X_{i,3},X_{i,4},X_{i,5} \sim Wei(\beta_i,\eta_i),i = 1,2,\ldots,20$。因為我們知道韋伯分佈經過對數轉換後會變成最小極值分佈 (smallest extreme value distribution, 記作SEV($\mu$,$\sigma$)，其中$\mu=log\eta$ 為位置參數，而$\sigma=1/\beta$ 為尺度參數)，所以我們可以做以下轉換
+\begin{align}
+Y_{i, j}=\frac{\log \left(X_{i, j}\right)-\hat{\mu}_{i}}{\hat{\sigma}_{i}}=\frac{\log \left(X_{i, j}\right)-\log \left(\hat{\eta}_{i}\right)}{1 / \hat{\beta}_{i}} \mbox{，}
+\end{align}
+其中$\hat{\beta}_i$及$\hat{\eta}_i$分別是利用資料$X_{i,j}$，$j=1,2,\ldots,5$，所得到的$\beta_i$及$\eta_i$之最大概似估計值。為了將問題簡化，我們將(21)式標準化的資料經過以下轉換
+\begin{align}
+Q_{i, j}=\Phi^{-1}\left[F\left(Y_{i, j}\right)\right], i=1,2, \ldots, 20, j=1,2, \ldots, 5 \mbox{，}
+\end{align}
+其中F$(\cdot)$為SEV(0,1)之累積分佈函數而$\Phi^{-1}(\cdot)$為N(0,1)累積分佈函數之反函數。這時候問題就簡化為對標準常態分佈做適合度檢定，在這裡我們使用雙邊的KS (Kolmogorov–Smirnov) 檢定得到p值為0.3655，因此我們不拒絕虛無假設。
+所以我們可以確定這筆資料服從韋伯分佈的假設是合適的。
+
+在做第二階段監控時，我們需要先使用第一階段管制狀態下的資料來估計形狀參數$\beta$及尺度參數$\eta$的值。根據Zhang, Ye 和 Xie (2017)，我們需要將每組形狀參數$\beta$的最大概似估計值乘上修正係數後才會讓我們形狀參數$\beta$的估計值有近似不偏的結果，在Zhang, Ye and Xie (2017)的表1中列出樣本數$n=2,3,\ldots,20$形狀參數$\beta$所需修正之係數。而當樣本數n=5時，修正係數為0.6934。接下來，我們將依照下列流程來對形狀參數$\beta$及尺度參數$\eta$做估計: 1. 利用第一階段的前十組資料計算出每組的最大概似估計值後，再根據Zhang, Ye 和 Xie (2017)的建議對形狀參數的最大概似估計值做調整(估計值乘以0.6934)，之後再對10組的估計值取平均得到$\hat{\beta}$及$\hat{\eta}$。然後再以舒華特 (Shewhart) 管制圖來對前十組資料進行監控; 2. 若在監控過程中有監控統計量的觀測值超出管制界限，則我們將那組資料移除並用剩下的資料重複步驟1直到全部監控統計量的觀測值都落在管制界限內; 3. 當所有監控統計量的觀測值都落在管制界限內時，我們以當時的$\hat{\beta}$及$\hat{\eta}$當做管制狀態下的參數$\beta_0$及$\eta_0$值。最後利用前十組資料所得到管制狀態下製程的參數估計值為$\beta_0=5.25$及$\eta_0=3.16$。
+
+接著我們使用EWMA FSI管制圖，EWMA VSI 管制圖以及AEWMA VSI管制圖(($d_1$,$d_2$)=(0.1,1.9))來對第二階段的10組資料進行監控。我們從表11和圖1來觀察這三種管制圖的表現，我們可以發現EWMA FSI管制圖和EWMA VSI管制圖在平滑常數$\lambda=0.05,0.1$時在第3個抽樣時間點，而$\lambda=0.2$時在第2個抽樣時間點偵測到失控警訊，而AEWMA VSI管制圖在$\psi=0.05,0.1,0.2$下都在第2個抽樣時間點偵測到失控警訊。但發出失控警訊的時間卻又有顯著差異，其中傳統的EWMA FSI管制圖的TS表現會因為平滑常數$\lambda$的不同而有差異，而EWMA VSI管制圖發出失控警訊的時間較EWMA FSI管制圖來得短，至於AEWMA VSI管制圖不管平滑常數$\psi$為多少都能有最短的TS表現。
+
+為了了解這三種管制圖在參數較小變動時的監控效率，我們使用表10的前十組(樣本數n=5)資料當作第一階段的資料，而在第二階段監控的部分我們假設改變點$\tau=10$，前十組資料從Weibull(5.25,3.16)分佈生成，第十一組開始從Weibull(9,3.2)分佈生成(此時$\beta$的改變約為標準差的1.08倍)，在這邊我們設定平滑常數$\lambda=0.05,0.1,0.2$及$\psi=0.05,0.1,0.2$，三種管制圖的結果列在表12和圖2。從圖2中我們發現EWMA FSI管制圖，EWMA VSI管制圖和AEWMA VSI管制圖都在第16個抽樣時間點偵測到失控警訊。另外，從表12中我們發現EWMA VSI管制圖的TS比EWMA FSI管制圖來的短，而AEWMA VSI管制圖的TS相較於EWMA VSI管制圖縮短更多。這表示AEWMA VSI管制圖能以更短的時間偵測到失控的警訊，因此在實際應用上AEWMA VSI管制圖會比其他兩種管制圖來得有優勢。
+
+
+
+
+\newpage
+\section{\Kai{第五章\quad 結論與後續研究}}
+在許多常見的監控產品失效時間的管制圖中，通常會使用韋伯分佈來描述產品的壽命。雖然在文獻中有一些監控韋伯分佈形狀參數的管制圖，但是比較少有文獻探討如何同時監控韋伯分佈的雙參數。由於韋伯分佈的尺度參數跟形狀參數都會對產品失效時間的平均值、標準差以及危險函數有所影響，因此如何同時監控韋伯分佈的雙參數是一個重要的議題。在本文中，我們提出了兩種同時監控韋伯雙參數的變動抽樣區間管制圖，EWMA VSI管制圖在管制狀態下的分佈比較容易去了解，因此在建構上相對容易。至於AEWMA VSI管制圖，雖然在建構上較為複雜，不過我們透過模擬的結果發現，AEWMA VSI管制圖在製程兩個參數不同的偏移量下都能有良好的監控效率，也就是說，當製程在管制狀況外時，AEWMA VSI管制圖比EWMA VSI管制圖的偵測失控警訊平均時間ATS$_1$更短。
+
+本文還有一些可以探討的部分，像是關於設限資料的部分。舉例來說，我們考慮$X_{i,\left( 1\right)}\leq$ $X_{i,\left( 2\right)}\leq$ $\ldots$ $\leq$ $X_{i,\left( r\right)}$為一組樣本數為n，在第i個抽樣時間點從$Wei(\beta,\eta)$抽取的型二設限有序觀測值，i=1,2,3,$\ldots$，其中r為一預先選定之正整數。1$\leq$r$\leq$n。這時候在2.1節中的(1)式及(2)式的統計量分別會服從$\chi^2_{2r}$及$\chi^2_{2r-2}$，如此一來，我們便可將本文中所提出的EWMA VSI及AEWMA VSI管制圖用在型二設限資料的問題上。另外，關於管制圖偏差的問題也可以做深入的探討，到底存不存在同時監控韋伯雙參數的不偏聯合管制圖，這些問題都可以做進一步的理論或應用上的研究。
+
+
+  \newpage
+  \section{\Kai{參考文獻}}
+  \begin{enumerate}[{[}1{]}]
+   
+  \item Guo, B. and Wang, B. X. (2014).“Control charts for monitoring the Weibull shape
+parameter based on type-ii censored sample.” \textit{Quality and Reliability Engineering
+International}, 30(1), pp. 13-24.
+
+  \item Guo, B., Wang, B. X. and Xie, M. (2014).“ARL-unbiased control charts for the
+monitoring of exponentially distributed characteristics based on type-II censored
+samples.” \textit{Journal of Statistical Computation and Simulation}, 84(12), pp. 2734–2747. 
+
+  \item Haq A, Gulzar R, Khoo, M. B. C. (2018). “An efficient adaptive EWMA control chart for monitoring the process mean.”\textit{Quality and Reliability Engineering
+International}, 34(4), pp. 563-571.
+
+
+  \item Haq A. (2018). “A new adaptive EWMA control chart for monitoring the process dispersion.” \textit{Quality and Reliability Engineering
+International}, 34(5), pp. 846-857.
+
+  \item Padgett, W. and Spurrier, J. D. (1990).“Shewhart-type charts for percentiles of
+strength distributions.” \textit{Journal of Quality Technology}, 22(4), pp. 283-288.
+  \item Page, E. S. (1954).“Continuous inspection schemes.” \textit{Biometrics}, 41(1/2), pp. 100-115.
+
+  \item Pascual, F. (2010).“EWMA charts for the Weibull shape parameter.” \textit{Journal of
+Quality Technology}, 42(4), pp. 400–416.
+\\
+\\
+  \item Pascual, F. and Li, S. (2012).“Monitoring the Weibull shape parameter by control
+charts for the sample range of type II censored data.” \textit{Quality and Reliability
+Engineering International}, 28(2), pp. 233-246.
+
+  \item Reynolds, M. R., Amin, R. W. and Arnold, J. C. (1990).“CUSUM charts with
+variable sampling intervals.” \textit{Technometrics}, 32(4), pp. 371-384.
+  
+  \item Roberts, S. W. (1959). “Control chart test based on geometric moving averages.” \textit{Technometrics}, 1(3), pp. 234-250.
+
+  \item Saccucci, M. S. and Lucas, J. M. (1990).“Exponentially weighted moving average
+control schemes: properties and enhancements.” \textit{Technometrics}, 32(1), pp. 1-12.
+ 
+ \item Shewart, W. A. (1924). “Some application of statistical methods to the analysis of physical and engineering data.” \textit{Bell System Technical Journal}, 3(1), pp. 43-87
+
+  \item Zhang, C. W., Ye, Z. and Xie, M. (2017).“Monitoring the shape parameter of a Weibull renewal process.”\textit{IISE Transactions}, 49(8), pp. 800-813.
+  
+  \end{enumerate}
+
+
+\newpage
+
+
+
+
+\section{\Kai{附表}}
+\begin{table}[htbp]
+\centering
+\caption{在ARL$_0=500$、$n=10$及不同平滑常數$\lambda$下，使用Max chart的EWMA FSI管制圖的管制界限。}\label{CL}
+\ \\
+\begin{tabular}{cc}
+\hline
+$\lambda$  & $h$      
+ \\ \hline
+0.05      & 0.4608 \\
+0.1      & 0.7010  \\
+0.2      & 1.0618
+\\ \hline
+\multicolumn{2}{l}
+
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{在ARL$_0=500$、$n=10$及不同平滑常數$\psi$下，使用Max chart的AEWMA VSI管制圖的管制界限。}\label{CL}
+\ \\
+\begin{tabular}{cc}
+\hline
+$\psi$  & $h^*$      
+ \\ \hline
+0.05      & 0.7319 \\
+0.1      & 0.8245  \\
+0.2      & 1.1029
+\\ \hline
+\multicolumn{2}{l}
+
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{在ANSS$_0=500$、$n=10$及不同平滑常數$\lambda$下，使用Max chart的EWMA VSI管制圖的警戒界限。}\label{CL}
+\ \\
+\begin{tabular}{cccccccc}    
+ \hline 
+                        & \multicolumn{7}{c}{$g$}                                                    \\ \cline{2-8} 
+                        &                &  & $\psi=0.05$   &  & $\psi=0.1$    &  & $\psi=0.2$    \\ \cline{4-4} \cline{6-6} \cline{8-8} 
+\multirow{3}{*}{$n=10$}  & $(d_1,d_2)=(0.1,1.9)$  &  & 0.1615 &  & 0.2362 &  & 0.3464 \\
+                        & $(d_1,d_2)=(0.25,1.5)$ &  & 0.1862 & & 0.2718 &  & 0.3995 \\
+                        & $(d_1,d_2)=(0.5,1.25)$ &  & 0.2041 &  & 0.2981 &  & 0.4371 \\ \hline  
+
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{在ANSS$_0=500$、$n=10$及不同平滑常數$\psi$下，使用Max chart的AEWMA VSI管制圖的警戒界限。}\label{CL}
+\ \\
+\begin{tabular}{cccccccc}    
+ \hline 
+                        & \multicolumn{7}{c}{$g^*$}                                                    \\ \cline{2-8} 
+                        &                &  & $\psi=0.05$   &  & $\psi=0.1$    &  & $\psi=0.2$    \\ \cline{4-4} \cline{6-6} \cline{8-8} 
+\multirow{3}{*}{$n=10$}  & $(d_1,d_2)=(0.1,1.9)$  &  & 0.2377 &  & 0.3425 &  & 0.4091 \\
+                        & $(d_1,d_2)=(0.25,1.5)$ &  & 0.2740 & & 0.3782 &  & 0.4582 \\
+                        & $(d_1,d_2)=(0.5,1.25)$ &  & 0.3018 &  & 0.4053 &  & 0.4894 \\ \hline  
+
+\end{tabular}
+\end{table}
+\newpage
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表5: 在平滑常數$\lambda$=0.05，樣本數$n=5$及整體ARL$_0$=370的情況下，EWMA FSI管制圖在不同$\beta$及$\eta$下的ATS$_1$ (括號內為標準差)}
+\label{ATS_10-1}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 2.67 & 2.36 & 2.22 & 2.19 &  2.16 &  2.14  & 2.13  & 2.11  & 2.10 & 2.08 & 2.07 & 2.04 & 2.01 & 2.00 & 2.00 & 2.00  \\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 3.21 & 6.52&  6.02 & 5.88 &  5.76 &  5.69&   5.64 &  5.59  & 5.55 & 5.49 & 5.45 & 5.35 & 5.27 &5.23 & 5.04 & 4.70 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 2.98 &10.50& 15.76& 15.76 & 15.19 & 14.77 & 14.35 & 13.98 & 13.66 &13.24& 12.91& 11.86 & 9.72&7.81 & 5.76 & 4.86\\
+                      & (0.01)& (0.03)& (0.05) &(0.05) &(0.04)& (0.04)& (0.04)& (0.03)& (0.03)&  (0.03)&  (0.03)&  (0.02)&  (0.01)&  (0.01)&  (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{0.82}  & 2.90 &11.00& 22.52 &24.69  &24.84 & 24.16 & 23.23 & 22.33 & 21.51 &20.30& 19.28& 15.82& 10.62& 7.93 & 5.76&  4.86\\
+                      & (0.01)& (0.03)& (0.08)& (0.09)& (0.09)& (0.08)& (0.08)& (0.07)& (0.07)&  (0.06)&  (0.05)&  (0.03)&  (0.02)&  (0.01)&  (0.01)&(0.01)\\ \hline
+\multirow{2}{*}{0.9}  & 2.81 &11.12& 31.23& 44.22 & 59.12&  62.07 & 59.93 & 55.11 & 49.72& 41.30 &34.81& 20.39 &10.92& 7.94 & 5.76 & 4.86\\
+                      & (0.01)& (0.03)& (0.13)& (0.21)& (0.30)& (0.32)& (0.30)& (0.26)& (0.22)&  (0.17)&  (0.13)&  (0.06)&  (0.02)&  (0.01)&  (0.01)&(0.01)\\ \hline                                               
+\multirow{2}{*}{0.95}  & 2.75 &10.95& 33.70& 55.98 &111.66& 154.41 &166.36 &143.82 &110.70 &70.13 &48.96 &21.81& 10.94& 7.94 & 5.76 & 4.86\\
+                      & (0.01)& (0.03)& (0.15)& (0.29)& (0.67)& (0.96)& (1.04)& (0.88)& (0.64)&  (0.35)&  (0.22)&  (0.07)&  (0.02)&  (0.01)&  (0.01)&(0.01)\\ \hline
+\multirow{2}{*}{1}  & 2.69 &10.63& 32.08& 54.16 &127.45 &241.04 &370.20 &327.07 &200.27 &93.47& 56.94& 22.19& 10.94& 7.94 & 5.76  &4.86\\
+                      & (0.01)& (0.03)& (0.14)& (0.28)& (0.78)& (1.59)& (2.53)& (2.20)& (1.27)&  (0.52)&  (0.28)&  (0.07)&  (0.02)&  (0.01)&  (0.01)&(0.01)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  &2.64 &10.15 &27.67 &41.66 & 75.40 &111.30& 153.43 &174.06 &151.71& 89.71& 56.90& 22.22 &10.94& 7.94 & 5.76 & 4.86\\
+                      & (0.01)& (0.03)& (0.11)& (0.20)& (0.42)& (0.66)& (0.96)& (1.10)& (0.93)&  (0.49)&  (0.28)&  (0.07)&  (0.02)&  (0.01)&  (0.01)&(0.01)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &2.58 & 9.58& 22.49 &29.97 & 41.95 & 50.96 & 60.17 & 67.16 & 70.07& 62.36 &49.17 &22.13& 10.94&7.94 & 5.76 & 4.86\\
+                      &  (0.01) &(0.03)& (0.09)& (0.13)& (0.20)& (0.26)& (0.32)& (0.36)& (0.37)&  (0.31)&  (0.22)&  (0.07)&  (0.02)&  (0.01)&  (0.01)&(0.01)\\ \hline
+\multirow{2}{*}{1.17}  &2.51  &8.70 &16.69& 19.82 & 23.58 & 25.81 & 27.88 & 29.72 & 31.21& 32.11& 31.14& 21.00& 10.94&7.94 & 5.76 & 4.86\\
+                      &  (0.01)& (0.03)& (0.06)& (0.08)& (0.09)& (0.10)& (0.11)& (0.12)& (0.13)&  (0.12)&  (0.12)&  (0.06)&  (0.02)&  (0.01)  &(0.01)&(0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &2.43 & 7.72 &12.46 &13.80 & 15.25 & 16.08 & 16.83 & 17.53 & 18.16 &18.90 &19.23& 17.42 &10.89 & 7.94& 5.76 & 4.86\\
+                      &  (0.01)& (0.02)& (0.04)& (0.05)& (0.05)& (0.05)& (0.06)& (0.06)& (0.06)&  (0.06)&  (0.06)&  (0.04)&  (0.02)&  (0.01)&  (0.01) &(0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &2.22 & 5.42 & 6.82 & 7.13  & 7.42 &  7.59  & 7.75  & 7.89  & 8.02 & 8.19 & 8.33 & 8.61 & 8.39&7.48 & 5.75 & 4.86\\
+                      &  (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01) &(0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &1.91 & 3.41 & 3.84  &3.92 &  4.00 &  4.05  & 4.09  & 4.12  & 4.15 & 4.19 & 4.22 & 4.30&  4.36&4.34  &4.26 & 4.15\\
+                      &  (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)&  (0.00)&(0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表5 (續): 在平滑常數$\lambda$=0.1，樣本數$n=5$的及整體ARL$_0$=370情況下，EWMA FSI管制圖在不同$\beta$及$\eta$下的ATS$_1$ (括號內為標準差)}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 2.16 &2.01  &2.00 & 2.00 &  2.00  & 2.00  & 2.00  & 2.00  & 2.00 &  2.00&  2.00&  2.00 & 2.00&  2.00 & 2.00 & 2.00  \\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 2.61 &5.36 & 5.01 & 4.89  & 4.78 &  4.72  & 4.67  & 4.62 &  4.59 &  4.54 & 4.50 & 4.41 & 4.33 & 4.28 & 4.09 & 3.80 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 2.45 &9.02& 14.57 &14.85 & 14.45 & 14.06 & 13.66 & 13.28  &12.96 & 12.48 &12.11 &10.88 & 8.51 & 6.66 & 4.79 & 3.99\\
+                      & (0.01)& (0.03)& (0.05)& (0.05)& (0.05)& (0.05)& (0.05)& (0.04)& (0.04)& (0.04)&  (0.03)&  (0.02)&  (0.02)& (0.01)&  (0.01)&     (0.00)\\ \hline
+\multirow{2}{*}{0.82}  & 2.39& 9.54 &21.92 &25.07 & 26.14 & 25.73 & 24.94 & 23.98 & 23.00 & 21.52& 20.14& 15.54 & 9.49 & 6.81 & 4.79 & 3.99\\
+                      & (0.01)& (0.03)& (0.10)& (0.12)& (0.12)& (0.12)& (0.11)& (0.10)& (0.10)&  (0.08)&  (0.07)&  (0.05)&  (0.02)&  (0.01)&  (0.01)&   (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 2.32 &9.63& 32.07 &48.97 & 70.23 & 77.70 & 77.94 & 74.10 & 67.16 & 54.31& 43.97 &21.53 & 9.88 & 6.83 & 4.79 & 3.99\\
+                      & (0.01)& (0.03)& (0.17)& (0.28)& (0.43)& (0.48)& (0.47)& (0.44)& (0.39)&  (0.29)&  (0.23)&  (0.08)&  (0.03)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  & 2.28 &9.44& 34.85& 62.20 &130.66& 182.66& 208.59 &193.90 &157.26 & 98.78 &65.86 &23.42  &9.90  &6.83  &4.79  &3.99\\
+                      & (0.01)& (0.03)& (0.19)& (0.37)& (0.86)& (1.21)& (1.40)& (1.29)& (1.02)&  (0.61)&  (0.38)&  (0.10)&  (0.03)&  (0.01)&  (0.01) &    (0.00)\\ \hline
+\multirow{2}{*}{1}  & 2.24& 9.08& 32.55& 59.27 &144.82 &251.41& 369.51& 366.63& 261.61 &130.43& 76.77 &23.86 & 9.91 & 6.83 & 4.79 & 3.99\\
+                      & (0.01)& (0.03)& (0.17)& (0.36)& (0.97)& (1.70)& (2.55)& (2.53)& (1.77)&  (0.83)&  (0.46)&  (0.10)&  (0.03)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  &2.20 &8.59 &26.99 &43.27  &84.25 &127.35& 182.04 &218.26& 202.18 &124.63& 76.81 &23.90 & 9.91 & 6.83 & 4.79  &3.99\\
+                      & (0.01) &(0.03) &(0.14) &(0.24)& (0.53)& (0.83)& (1.22)& (1.48)& (1.36)&  (0.79)&  (0.46)&  (0.10)&  (0.03)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &2.17 &8.03 &21.08 &29.71 & 44.91 & 57.02 & 70.54 & 83.14 & 90.84 & 83.00& 64.23& 23.77 & 9.91 & 6.83 & 4.79 & 3.99\\
+                      &  (0.01)& (0.03)& (0.10)& (0.15)& (0.26)& (0.34)& (0.43)& (0.51)& (0.56)&  (0.50)&  (0.37)&  (0.10)&  (0.03)&  (0.01)&  (0.01)&     (0.00)\\ \hline
+\multirow{2}{*}{1.17}  &2.12 &7.21 &15.10 &18.64 & 23.16 & 26.14 & 29.01 & 31.90 & 34.40&  36.69& 35.79& 22.15 & 9.90&  6.83 & 4.79 & 3.99\\
+                      &  (0.01)& (0.03)& (0.07)& (0.09)& (0.11)& (0.13)& (0.15)& (0.16)& (0.18)&  (0.19)&  (0.18)&  (0.09)&  (0.03)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &2.06 &6.37& 10.91& 12.36 & 14.01 & 14.99 & 15.95 & 16.81 & 17.66 & 18.72& 19.28& 17.22 & 9.83 & 6.83 & 4.79 & 3.99\\
+                      &  (0.01)& (0.02)& (0.04)& (0.05)& (0.06)& (0.06)& (0.07)& (0.07)& (0.07)&  (0.08)&  (0.08)&  (0.06)&  (0.03)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &1.91& 4.46 & 5.72 & 6.00 &  6.29 &  6.45  & 6.59  & 6.73  & 6.85  & 7.02 & 7.15 & 7.42 & 7.17&  6.31 & 4.78 & 3.99\\
+                      &  (0.01)& (0.01)& (0.02)& (0.02)& (0.02)&(0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &1.68& 2.82 & 3.15 & 3.22  & 3.29  & 3.32  & 3.35  & 3.38  & 3.40  & 3.44 & 3.47 & 3.53 & 3.56 & 3.55 & 3.44 & 3.33\\
+                      &  (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)&  (0.00)   &(0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表5 (續):在平滑常數$\lambda$=0.2，樣本數$n=5$及整體ARL$_0$=370的情況下，EWMA FSI管制圖在不同$\beta$及$\eta$下的ATS$_1$ (括號內為標準差)}
+
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 1.72& 1.73 & 1.72 & 1.72  & 1.72  & 1.72  & 1.72  & 1.72   &1.72  & 1.73  & 1.73 & 1.74  &1.77 &1.81& 1.88& 1.93  \\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  &  2.11 &4.57 & 4.34 & 4.24  & 4.14  & 4.08  & 4.03 &  3.98 &  3.94  & 3.89  & 3.86 & 3.76 & 3.66& 3.60& 3.43& 3.16 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01)  & (0.01) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 2.00 &8.25 &15.58& 16.46 & 16.59 & 16.37  &16.02 & 15.69 & 15.34 & 14.82 & 14.37 &12.50&  8.65 &6.21& 4.15& 3.35\\
+                      & (0.01)& (0.03)& (0.08)& (0.08)& (0.08)& (0.08)& (0.08)& (0.07)& (0.07)& (0.06)&  (0.06)&  (0.05)&  (0.02)& (0.02)&  (0.01)&     (0.01)\\ \hline
+\multirow{2}{*}{0.82}  & 1.96 &8.85 &25.12 &30.81 & 34.69 & 35.38 & 35.20 & 34.77 & 33.98 & 32.20 & 30.33 &21.27& 10.03& 6.39& 4.15& 3.35\\
+                      & (0.01)& (0.04)& (0.14)& (0.18)& (0.21)& (0.21)& (0.20)& (0.20)& (0.19)&  (0.18)&  (0.16)&  (0.10)&  (0.04)&  (0.02)&  (0.01)&   (0.01)\\ \hline
+\multirow{2}{*}{0.9}  & 1.92 &8.90 &37.85 &61.53 & 95.85& 112.50& 122.02 &122.95& 117.30 & 99.46 & 80.39& 31.84& 10.47& 6.42& 4.15& 3.35\\
+                      & (0.01)& (0.04)& (0.23)& (0.40)& (0.64)& (0.75)& (0.82)& (0.82)& (0.79)&  (0.66)&  (0.52)&  (0.18)&  (0.04)&  (0.02)&  (0.01)&     (0.01)\\ \hline                                               
+\multirow{2}{*}{0.95}  & 1.89& 8.64& 40.81& 75.83& 155.68& 219.89& 267.74& 272.93& 243.51 &169.36& 114.83& 34.28& 10.51 &6.42& 4.15 &3.35\\
+                      & (0.01)& (0.04)& (0.25)& (0.50)& (1.06)& (1.53)& (1.87)& (1.89)& (1.68)&  (1.15)&  (0.75)&  (0.20)&  (0.04)&  (0.02)&  (0.01) &    (0.01)\\ \hline
+\multirow{2}{*}{1}  & 1.87 &8.18 &36.79 &70.69 &160.20 &260.09& 369.95 &408.35 &349.88 &212.29 &130.92 &34.82 &10.51 &6.42 &4.15& 3.35\\
+                      & (0.01)& (0.04)& (0.23)& (0.47)& (1.09)& (1.78)& (2.55)& (2.82)& (2.42)&  (1.47)&  (0.87)&  (0.20)&  (0.04)&  (0.02)&  (0.01)&     (0.01)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  &1.84 &7.61& 29.06 &49.63  &98.03& 152.24& 217.43 &275.29 &279.90 &202.30& 130.40& 34.92 &10.51 &6.42 &4.15& 3.35\\
+                      & (0.01) &(0.03) &(0.17) &(0.32)& (0.65)& (1.04)& (1.48)& (1.90)& (1.92)&  (1.40)&  (0.87)&  (0.20)&  (0.04)&  (0.02)&  (0.01)&     (0.01)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &1.81 &7.02 &21.90 &32.59 & 52.80 & 71.22 & 93.04 &116.49 &135.51& 135.86 &109.19 &34.67 &10.51 &6.42& 4.15& 3.35\\
+                      &  (0.01)& (0.03)& (0.12)& (0.20)& (0.34)& (0.47)& (0.62)& (0.78)& (0.91)&  (0.91)&  (0.72)&  (0.20)&  (0.04)&  (0.02)&  (0.01)&     (0.01)\\ \hline
+\multirow{2}{*}{1.17}  &1.78& 6.23 &14.85& 19.31 & 25.58 & 30.27 & 35.43 & 41.00 & 46.89 & 54.46 & 56.34& 32.01& 10.51& 6.42& 4.15& 3.35\\
+                      &  (0.01)& (0.03)& (0.08)& (0.11)& (0.15)& (0.18)& (0.21)& (0.25)& (0.29)&  (0.34)&  (0.35)&  (0.18)&  (0.04)&  (0.02)&  (0.01)&     (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &1.73 &5.41 &10.26& 12.00 & 14.25 & 15.76 & 17.31 & 18.96  &20.49 & 22.79  &24.35 &22.64 &10.40& 6.42 &4.15& 3.35\\
+                      &  (0.01)& (0.02)& (0.05)& (0.06)& (0.07)& (0.08)& (0.09)& (0.10)& (0.11)&  (0.12)&  (0.13)&  (0.12)&  (0.04)&  (0.02)&  (0.01)&     (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &1.63 &3.73  &4.96 & 5.25  & 5.56 &  5.74  & 5.90 &  6.07  & 6.22 &  6.44  & 6.60 & 6.98 & 6.72& 5.73& 4.13& 3.35\\
+                      &  (0.01)& (0.01)& (0.02)& (0.02)& (0.02)&(0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&     (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  & 1.47 &2.33 & 2.63 & 2.69 &  2.74  & 2.77  & 2.80 &  2.82 &  2.84  & 2.87  & 2.89 & 2.94 & 2.96& 2.93& 2.86& 2.78\\
+                      &  (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)   &(0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表6 :在平滑常數$\lambda$=0.05，樣本數$n=5$，(d$_1$,d$_2$)=(0.5,1.25)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$}
+\leftline{(括號內為標準差)}
+
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 1.58& 1.30 & 1.16  &1.13  & 1.10  & 1.09   &1.08 &  1.07 &  1.06  &1.05 & 1.04 & 1.02 & 1.01 & 1.00 & 1.00 & 1.00  \\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 2.10 &4.73 & 4.42 & 4.31  & 4.21  & 4.16  & 4.11  & 4.07  & 4.03 & 3.98 & 3.95 & 3.86 & 3.78 & 3.73 & 3.53 & 3.24 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.00)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 1.95 &7.90& 11.97 &12.05 & 11.66 & 11.34  &11.00 & 10.69 & 10.40& 10.01 & 9.69 & 8.76 & 7.11 & 5.74 & 4.19 & 3.46\\
+                      & (0.01)& (0.02)& (0.04)& (0.04)& (0.03)& (0.03)& (0.03)& (0.03)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&     (0.00)\\ \hline
+\multirow{2}{*}{0.82}  & 1.89 &8.36 &17.29 &19.07 & 19.33 & 18.79 & 17.99 & 17.17  &16.39 &15.26 &14.36 &11.60 & 7.87 & 5.90 & 4.20&  3.46\\
+                      & (0.01)& (0.03)& (0.06)& (0.07)& (0.07)& (0.07)& (0.06)& (0.05)& (0.05)&  (0.04)&  (0.04)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&     (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 1.83& 8.50& 24.82& 35.79 & 49.01 & 51.74 & 49.46 & 44.48&  38.95& 31.12& 25.73& 15.10 & 8.26 & 5.95 & 4.20&  3.46\\
+                      & (0.01)& (0.03)& (0.11)& (0.17)& (0.26)& (0.27)& (0.25)& (0.21)& (0.17)&  (0.12)&  (0.09)&  (0.04)&  (0.02)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  & 1.79& 8.35& 27.25& 47.03& 100.24& 143.03& 154.56 &129.67  &94.92 &55.79& 37.58 &16.54 & 8.33 & 5.96&  4.20 & 3.46\\
+                      & (0.01)& (0.03)& (0.12)& (0.25)& (0.62)& (0.91)& (0.99)& (0.81)& (0.55)&  (0.28)&  (0.16)&  (0.05)&  (0.02)&  (0.01)&  (0.01)&    (0.00)\\ \hline
+\multirow{2}{*}{1}  & 1.75 &8.08& 25.86 &45.57& 117.01& 233.98& 370.19 &323.52& 189.44& 80.79 &46.54& 17.21&  8.36 & 5.96 & 4.20 & 3.46\\
+                      & (0.01)& (0.03)& (0.12)& (0.24)& (0.74)& (1.57)& (2.56)& (2.21)& (1.23)&  (0.46)&  (0.23)&  (0.05)&  (0.02)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  &1.71 &7.69&21.99 &34.21  &65.75& 101.16& 143.39 &162.70& 138.20& 76.85 &46.69& 17.36 & 8.37 & 5.96 & 4.20 & 3.46\\
+                      & (0.01)& (0.02)& (0.09)& (0.17)& (0.38)& (0.62)& (0.92)& (1.05)& (0.86)&  (0.43)&  (0.23)&  (0.06)&  (0.02)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &1.67& 7.22& 17.69& 24.12& 34.94 & 43.24 & 51.48 & 57.23 & 58.49& 49.82& 38.38& 17.13 & 8.37 & 5.96 & 4.20 & 3.46\\
+                      &  (0.01)& (0.02)& (0.07)& (0.11)& (0.17)& (0.23)& (0.28)& (0.31)& (0.31)&  (0.25)&  (0.17)&  (0.05)&  (0.02)&  (0.01)&  (0.01)&     (0.00)\\ \hline
+\multirow{2}{*}{1.17}  &1.62& 6.54& 13.06& 15.73 & 18.99 & 20.92 & 22.61 & 23.92 & 24.77 &24.80& 23.58& 15.80 & 8.34 & 5.96 & 4.20 & 3.46\\
+                      &  (0.01)& (0.02)& (0.05)& (0.06)& (0.08)& (0.09)& (0.10)& (0.10)& (0.10)&  (0.10)&  (0.08)&  (0.05)&  (0.02)&  (0.01)&  (0.01)&   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &1.56& 5.78 & 9.71& 10.86 & 12.11 & 12.78 & 13.36 & 13.85 & 14.24 &14.60 &14.64 &12.94  &8.22  &5.96 & 4.20&  3.46\\
+                      &  (0.01)& (0.02)& (0.03)& (0.04)& (0.04)& (0.05)& (0.05)& (0.05)& (0.05)&  (0.05)&  (0.04)&  (0.03)&  (0.02)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &1.41 &3.99 & 5.20&  5.45  & 5.69 &  5.82  & 5.94  & 6.04  & 6.12 & 6.24 & 6.32 & 6.45 & 6.16 & 5.46 & 4.18 & 3.46\\
+                      &  (0.01)& (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &1.18& 2.36 & 2.70 & 2.77 &  2.83 & 2.87  & 2.90  & 2.92  & 2.95 & 2.98 & 3.00 & 3.06 & 3.08 & 3.05 & 2.95 & 2.85\\
+                      &  (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01) &(0.01) &(0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)&  (0.00)&  (0.00)&     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表6 (續):在平滑常數$\lambda$=0.1，樣本數$n=5$，(d$_1$,d$_2$)=(0.5,1.25)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$}
+\leftline{(括號內為標準差)}
+\label{ATS_10-5}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 1.14& 1.01 & 1.00 & 1.00 &  1.00 &  1.00  & 1.00 &  1.00  & 1.00  & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 1.54 &3.65 & 3.47 & 3.39  & 3.30  & 3.26  & 3.22 &  3.18  & 3.15 &  3.11 & 3.08  &3.00 & 2.92 & 2.88 & 2.75&  2.56 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.00) & (0.00) & (0.00)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 1.46 &6.44& 10.57& 10.81 & 10.53 & 10.21   &9.88  & 9.55  & 9.25  & 8.82 & 8.49 & 7.48&  5.82&  4.60 & 3.29 & 2.71\\
+                      & (0.01)& (0.02)& (0.04)& (0.04)& (0.04)& (0.03)& (0.03)& (0.03)& (0.03)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01) &   (0.00)\\ \hline
+\multirow{2}{*}{0.82}  & 1.42& 6.90& 16.39 &18.90 & 19.77 & 19.34 & 18.55&  17.57 & 16.59 & 15.14 &13.95 &10.55 & 6.58 & 4.77 & 3.30&  2.71\\
+                      & (0.01)& (0.02)& (0.07)& (0.09)& (0.09)& (0.09)& (0.08)& (0.07)& (0.07)&  (0.05)&  (0.05)&  (0.03)&  (0.01)&  (0.01)&  (0.01)&   (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 1.38& 7.01 &25.36 &40.20 & 59.91 & 66.82  &66.40&  61.49  &53.77 & 40.84 &31.61 &14.84 & 7.01 & 4.84 & 3.31  &2.71\\
+                      & (0.01)& (0.03)& (0.13)& (0.24)& (0.37)& (0.42)& (0.41)& (0.37)& (0.32)&  (0.22)&  (0.16)&  (0.05)&  (0.02)&  (0.01)&  (0.01)&   (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  & 1.35& 6.87 &28.10& 53.29 &120.42 &173.48& 199.48 &182.35& 142.64 & 82.98 &51.84 &16.79 & 7.11 & 4.85 & 3.31 & 2.71\\
+                      & (0.01)& (0.03)& (0.15)& (0.33)& (0.81)& (1.17)& (1.35)& (1.22)& (0.94)&  (0.52)&  (0.30)&  (0.07)&  (0.02)&  (0.01)&  (0.01)&    (0.00)\\ \hline
+\multirow{2}{*}{1}  & 1.33& 6.59& 26.16 &50.71 &135.47& 245.97& 370.07& 366.68& 255.18& 118.58& 65.17& 17.72 & 7.15 & 4.86 & 3.31&  2.71\\
+                      & (0.01)& (0.02)& (0.14)& (0.31)& (0.92)& (1.68)& (2.57)& (2.55)& (1.75)&  (0.77)&  (0.40)&  (0.07)&  (0.02)&  (0.01)&  (0.01) &     (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  &1.30& 6.21 &21.31& 35.94 & 75.21 &118.40& 173.68& 209.53& 191.49 &112.13& 65.32& 17.95 & 7.17 & 4.86 & 3.31&  2.71\\
+                      & (0.01)& (0.02)& (0.11)& (0.21)& (0.48)& (0.79)& (1.18)& (1.44)& (1.30)&  (0.72)&  (0.40)&  (0.08)&  (0.02)&  (0.01)&  (0.01) &     (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &1.28& 5.79 &16.36& 23.89 & 37.79 & 49.21 & 61.82 & 73.01 & 78.75 & 69.17& 51.48& 17.61 & 7.17 & 4.86 & 3.31 & 2.71\\
+                      &  (0.01)& (0.02)& (0.08)& (0.13)& (0.22)& (0.30)& (0.39)& (0.46)& (0.50)&  (0.42)&  (0.30)&  (0.07)&  (0.02)&  (0.01)&  (0.01) &     (0.00)\\ \hline
+\multirow{2}{*}{1.17}  &1.25& 5.18& 11.50 &14.48 & 18.40 & 20.96 & 23.32 & 25.48 & 27.08 & 27.96& 26.50& 15.74 & 7.13 & 4.86 & 3.31 & 2.71\\
+                      & (0.01) &(0.02)& (0.05)& (0.07)& (0.09)& (0.11)& (0.12)& (0.13)& (0.14)&  (0.14)&  (0.13)&  (0.06)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &1.21& 4.54 & 8.20 & 9.41 & 10.77 & 11.55 & 12.25 & 12.84 & 13.35 & 13.85 &13.98& 12.00 & 6.98 & 4.85 & 3.31 & 2.71\\
+                       & (0.00)& (0.02)& (0.03)& (0.04)& (0.05)& (0.05)& (0.05)& (0.05)& (0.06)&  (0.06)&  (0.05)&  (0.04)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &1.11& 3.11 & 4.15 & 4.37  & 4.60 &  4.71  & 4.82  & 4.90  & 4.98  & 5.08&  5.14 & 5.24 & 4.95 & 4.33  &3.27 & 2.71\\
+                      &  (0.00)& (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.96& 1.83 & 2.08 & 2.13 &  2.17 &  2.19  & 2.21  & 2.23 &  2.24  & 2.27 & 2.29 & 2.33&  2.35 & 2.34 & 2.29 & 2.21\\
+                      &  (0.00)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)&  (0.00)&  (0.00)&     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表6 (續):在平滑常數$\lambda$=0.2，樣本數$n=5$，(d$_1$,d$_2$)=(0.5,1.25)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$}
+\leftline{(括號內為標準差) }
+\label{ATS_10-6}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.87 &0.87 & 0.86 & 0.86  & 0.86 &  0.86  & 0.86 &  0.86  & 0.86  & 0.86  & 0.86&  0.87 & 0.88 & 0.90 & 0.94 & 0.96 \\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 1.16& 2.87 & 2.76 & 2.69  & 2.62 &  2.58  & 2.55  & 2.51  & 2.48 &  2.44 &  2.42 & 2.35 & 2.27 & 2.22 & 2.06 & 1.84 \\
+                      & (0.00) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.00)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 1.11 &5.61 &11.02 &11.66 & 11.66&  11.40 & 11.03 & 10.65 & 10.26  & 9.69  & 9.24 & 7.78 & 5.40 & 3.94 & 2.62 & 2.04\\
+                      & (0.00)& (0.02)& (0.05)& (0.06)& (0.06)& (0.05)& (0.05)& (0.05)& (0.04)&  (0.04)&  (0.04)&  (0.02)&  (0.01)&  (0.01)&  (0.01)  &   (0.00)\\ \hline
+\multirow{2}{*}{0.82}  & 1.09 &6.13 &19.01 &23.77&  26.91 & 27.27 & 26.75 & 25.87 & 24.63&  22.32 & 20.25& 13.16 & 6.34 & 4.13 & 2.64 & 2.04\\
+                      & (0.00)& (0.03)& (0.11)& (0.14)& (0.16)& (0.16)& (0.16)& (0.15)& (0.14)&  (0.12)&  (0.11)&  (0.06)&  (0.02)&  (0.01)&  (0.01)&   (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 1.06& 6.22& 30.76& 52.75&  85.78 &101.91& 110.39 &109.79& 102.29 & 82.25 & 63.02& 21.49 & 6.84 & 4.21 & 2.64 & 2.04\\
+                      & (0.00)& (0.03)& (0.19)& (0.35)& (0.58)& (0.69)& (0.75)& (0.74)& (0.69)&  (0.55)&  (0.41)&  (0.12)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  & 1.05& 6.05& 33.78& 67.19& 147.04& 212.93& 262.06& 266.25& 233.66 &155.16 & 99.69 &24.88 & 7.00 & 4.24 &2.64 & 2.04 \\                
+					  & (0.00)& (0.03)& (0.21)& (0.45)& (1.01)& (1.49)& (1.84)& (1.86)& (1.62)&  (1.07)&  (0.66)&  (0.14)&  (0.02)&  (0.01)&  (0.01) &    (0.00)\\ \hline
+\multirow{2}{*}{1}  & 1.03& 5.72& 30.31& 62.40& 152.28 &255.45& 370.46& 411.09 &349.27 &204.29 &119.99 &26.45  &7.08 & 4.25  &2.64 & 2.04\\
+                      & (0.00)& (0.03)& (0.19)& (0.42)& (1.05)& (1.76)& (2.56)& (2.86)& (2.44)&  (1.42)&  (0.81)&  (0.15)&  (0.03)&  (0.01)&  (0.01) &     (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 1.01 &5.29 &23.47 &42.56 & 89.96 &144.54& 211.07 &269.91& 273.83 &192.74 &119.33 &26.87 & 7.12 & 4.25 & 2.64 & 2.04\\
+                      & (0.00)& (0.02)& (0.14)& (0.28)& (0.60)& (1.00)& (1.45)& (1.87)& (1.89)&  (1.34)&  (0.80)&  (0.16)&  (0.03)&  (0.01)&  (0.01)  &     (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &1.00 &4.86 &17.22 &26.91 & 45.93 & 63.67 & 84.72 &107.02 &124.31 &122.14 & 95.06 &26.19 & 7.12 & 4.25&  2.64 & 2.04\\
+                      &  (0.00)& (0.02)& (0.10)& (0.17)& (0.30)& (0.43)& (0.57)& (0.73)& (0.85)&  (0.83)&  (0.63)&  (0.15)&  (0.03)&  (0.01)&  (0.01) &     (0.00)\\ \hline
+\multirow{2}{*}{1.17}  &0.98 &4.29& 11.27& 15.13 & 20.68 & 24.82 & 29.29 & 33.95 & 38.60 & 43.92 & 44.20& 22.70 & 7.05 & 4.25 & 2.64 & 2.04\\
+                      & (0.00) &(0.02)& (0.06)& (0.09)& (0.12)& (0.15)& (0.18)& (0.21)& (0.24)&  (0.28)&  (0.28)&  (0.13)&  (0.03)&  (0.01)&  (0.01)  &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.95& 3.68 & 7.54 & 8.99 & 10.85 & 12.05 & 13.25 & 14.44 & 15.47  &16.83 & 17.55& 15.05 & 6.82 & 4.23 & 2.64 & 2.04\\
+                       & (0.00)& (0.02)& (0.04)& (0.05)& (0.06)& (0.06)& (0.07)& (0.08)& (0.08)&  (0.09)&  (0.09)&  (0.07)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  & 0.89 &2.45 & 3.41 & 3.63  & 3.86  & 3.98  & 4.09  & 4.19   &4.27  & 4.39  & 4.46  &4.59 & 4.28 & 3.64 & 2.60 & 2.04\\
+                      &  (0.00)& (0.01)& (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01) &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.79& 1.43 & 1.62  &1.66  & 1.69  & 1.70  & 1.72  & 1.73  & 1.74  & 1.75   &1.75 & 1.76  &1.73 & 1.69 & 1.58 & 1.49\\
+                      &  (0.00)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)&  (0.00)&  (0.00) &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表7:在平滑常數$\lambda$=0.05，樣本數$n=5$，(d$_1$,d$_2$)=(0.25,1.5)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$}
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.94& 0.67 & 0.57 & 0.56 &  0.54 &  0.54   &0.53  & 0.53  & 0.53 & 0.52 & 0.52  &0.51&  0.50 & 0.50 & 0.50 & 0.50 \\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 1.48 &3.78 & 3.59 & 3.50  & 3.41 &  3.36  & 3.31 &  3.27  & 3.24 & 3.18 & 3.15&  3.05 & 2.92&  2.82 & 2.61 & 2.43 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 1.38 &6.52 & 9.95 &10.09  & 9.83  & 9.56  & 9.26 &  8.98 &  8.71 & 8.32 & 8.02 & 7.13  &5.74 & 4.66 & 3.37 & 2.73\\
+                      & (0.01)& (0.02)& (0.03)& (0.03)& (0.03)& (0.03)& (0.03)& (0.03)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01)  &   (0.00)\\ \hline
+\multirow{2}{*}{0.82}  & 1.34 &6.97 &14.42 &16.01 & 16.34&  15.89 & 15.18  &14.41 & 13.68 &12.59& 11.74 & 9.37 & 6.43 & 4.85 & 3.38 & 2.73\\
+                      & (0.01)& (0.02)& (0.06)& (0.06)& (0.06)& (0.06)& (0.06)& (0.05)& (0.04)&  (0.04)&  (0.03)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&   (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 1.29 &7.11 &21.20 &30.90 & 42.96 & 45.54 & 43.21 & 38.19 & 32.71 &25.36& 20.72 &12.30 & 6.87 & 4.93&  3.39 & 2.73\\
+                      & (0.01)& (0.03)& (0.10)& (0.16)& (0.23)& (0.25)& (0.23)& (0.19)& (0.15)&  (0.10)&  (0.07)&  (0.03)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  &1.26& 6.98& 23.57& 41.71 & 92.98 &135.70& 146.86 &120.41 & 84.86& 47.11 &31.01& 13.75 & 7.00 & 4.95 & 3.39 & 2.73 \\                
+					  & (0.01)& (0.03)& (0.11)& (0.23)& (0.59)& (0.89)& (0.96)& (0.77)& (0.51)&  (0.24)&  (0.14)&  (0.04)&  (0.02)&  (0.01)&  (0.01) &    (0.00)\\ \hline
+\multirow{2}{*}{1}  & 1.23& 6.73& 22.34& 40.49& 110.34& 229.34& 370.13& 321.17 &182.33 &72.88 &40.41& 14.60 & 7.05 & 4.95 & 3.39 & 2.73\\
+                      & (0.01)& (0.03)& (0.11)& (0.22)& (0.71)& (1.56)& (2.58)& (2.21)& (1.20)&  (0.42)&  (0.21)&  (0.05)&  (0.02)&  (0.01)&  (0.01) &     (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 1.20 &6.39 &18.83 &29.94  &59.88 & 94.81& 136.87 &155.27& 129.44& 68.85& 40.71 &14.84 & 7.06 & 4.95 & 3.39 & 2.73\\
+                      & (0.01)& (0.02)& (0.09)& (0.15)& (0.36)& (0.60)& (0.90)& (1.02)& (0.83)&  (0.40)&  (0.21)&  (0.05)&  (0.02)&  (0.01)&  (0.01)  &     (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &1.17& 5.98& 15.08& 20.84 & 30.89 & 38.74 & 46.34 & 51.22 & 51.45& 42.35& 32.13& 14.50 & 7.06 & 4.95 & 3.39 & 2.73\\
+                      &  (0.01)& (0.02)& (0.07)& (0.10)& (0.16)& (0.21)& (0.26)& (0.29)& (0.28)& (0.22)&  (0.15)&  (0.05)&  (0.02)&  (0.01)&  (0.01)  &     (0.00)\\ \hline
+\multirow{2}{*}{1.17}  &1.13& 5.40 &11.12 &13.54 & 16.51 & 18.25 & 19.70 & 20.70 & 21.18& 20.75 &19.43 &13.05  &7.02  &4.95 & 3.39 & 2.73\\
+                      & (0.01)& (0.02)& (0.05)& (0.06)& (0.07)& (0.08)& (0.09)& (0.09)& (0.09)&  (0.09)&  (0.07)&  (0.04)&  (0.02)&  (0.01)&  (0.01)  &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &1.09 &4.76 & 8.27  &9.33 & 10.45  &11.06 & 11.55 & 11.91  &12.17 &12.32& 12.22 &10.58 & 6.84 & 4.94 & 3.39&  2.73\\
+                       & (0.01)& (0.02)& (0.03)& (0.04)& (0.04)& (0.04)& (0.05)& (0.05)& (0.05)&  (0.04)&  (0.04)&  (0.03)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  & 0.97& 3.24 & 4.36 & 4.59 &  4.81&   4.92  & 5.01  & 5.09 &  5.16 & 5.23 & 5.29 & 5.32 & 4.99 & 4.40 & 3.35 & 2.73\\
+                      &  (0.01)& (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01) &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.79& 1.80 & 2.10 & 2.15  & 2.21  & 2.24  & 2.26  & 2.28  & 2.30 & 2.33 & 2.35 & 2.40 & 2.43 & 2.41  &2.34 & 2.28\\
+                      &  (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)&  (0.00)  &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表7 (續):在平滑常數$\lambda$=0.1，樣本數$n=5$，(d$_1$,d$_2$)=(0.25,1.5)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$ }
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.60& 0.50 & 0.50 & 0.50 &  0.50  & 0.50   0.50 &  0.50  & 0.50  & 0.50  &0.50 & 0.50 & 0.50 & 0.50 & 0.50 & 0.50 &0.50\\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 0.97 &2.72 & 2.63 & 2.58  & 2.51  & 2.48  & 2.44 &  2.41  & 2.39  & 2.36 & 2.33  &2.27 & 2.23&  2.21  &2.11 & 1.92 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.00) & (0.00)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 0.92& 5.04 & 8.38 & 8.60  & 8.39 & 8.13  & 7.84  & 7.55 &  7.27 &  6.87&  6.56 & 5.68 & 4.40&  3.50 & 2.50 & 2.01\\
+                      & (0.01)& (0.02)& (0.03)& (0.03)& (0.03)& (0.03)& (0.03)& (0.03)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01)   &   (0.00)\\ \hline
+\multirow{2}{*}{0.82}  & 0.90& 5.46& 13.24& 15.36 & 16.12 & 15.71 & 14.92 & 13.97 & 13.01 & 11.63& 10.57 & 7.88  &5.03 & 3.69  &2.52 & 2.02\\
+                      & (0.01)& (0.02)& (0.06)& (0.07)& (0.08)& (0.07)& (0.07)& (0.06)& (0.05)&  (0.04)&  (0.04)&  (0.02)&  (0.01)&  (0.01)&  (0.01) &   (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 0.87& 5.57 &21.39 &34.84 & 53.42 & 59.90 & 59.03 & 53.47 & 45.35 & 32.61& 24.30& 11.19 & 5.49 & 3.79 & 2.53 & 2.02\\
+                      & (0.01)& (0.02)& (0.12)& (0.21)& (0.34)& (0.38)& (0.38)& (0.33)& (0.27)&  (0.18)&  (0.12)&  (0.04)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  &0.85 &5.45 &24.05 &47.71 &113.70 &167.26& 193.22& 174.41 &132.73  &72.62 &43.00& 13.09 & 5.64  &3.82 & 2.53 & 2.02 \\                
+					  & (0.01)& (0.02)& (0.14)& (0.30)& (0.77)& (1.14)& (1.32)& (1.18)& (0.89)&  (0.46)&  (0.25)&  (0.05)&  (0.02)&  (0.01)&  (0.01) &    (0.00)\\ \hline
+\multirow{2}{*}{1}  & 0.84 &5.23 &22.38 &45.42& 129.27 &242.23& 370.14 &366.46& 250.74& 110.74 &57.79 &14.28 & 5.72  &3.83  &2.53&  2.02\\
+                      & (0.00)& (0.02)& (0.13)& (0.29)& (0.89)& (1.67)& (2.59)& (2.56)& (1.73)&  (0.73)&  (0.36)&  (0.06)&  (0.02)&  (0.01)&  (0.01) &     (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 0.82 &4.92& 18.00 &31.53 & 69.48 &112.58& 168.06& 203.54& 184.15& 103.88& 58.05 &14.65 & 5.75 & 3.83 & 2.53 & 2.02\\
+                      & (0.00)& (0.02)& (0.10)& (0.19)& (0.45)& (0.76)& (1.16)& (1.41)& (1.27)&  (0.68)&  (0.36)&  (0.06)&  (0.02)&  (0.01)&  (0.01)  &     (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &0.80 &4.58& 13.67 &20.48&  33.51 & 44.41 & 56.34 & 66.52&  71.00 & 60.36& 43.53& 14.18 & 5.75 & 3.83 & 2.53 & 2.02\\
+                      &  (0.00)& (0.02)& (0.07)& (0.11)& (0.20)& (0.28)& (0.36)& (0.43)& (0.46)&  (0.37)&  (0.26)&  (0.06)&  (0.02)&  (0.01)&  (0.01)  &     (0.00)\\ \hline
+\multirow{2}{*}{1.17}  &0.78& 4.08 & 9.50& 12.13 & 15.67 & 17.97 & 19.99 & 21.70 & 22.78 & 22.83 &21.09& 12.19&  5.69 & 3.83 & 2.53 & 2.02\\
+                      & (0.00)& (0.02)& (0.05)& (0.06)& (0.08)& (0.10)& (0.11)& (0.12)& (0.12)&  (0.12)&  (0.10)&  (0.05)&  (0.02)&  (0.01)&  (0.01)   &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.76 &3.56 & 6.73 & 7.80 &  8.99  & 9.64 & 10.22 & 10.64 & 10.96 & 11.16 &11.05 & 9.17 & 5.47 & 3.81 & 2.53 & 2.02\\
+                       & (0.00)& (0.02)& (0.03)& (0.04)& (0.04)& (0.05)& (0.05)& (0.05)& (0.05)&  (0.05)&  (0.05)&  (0.03)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  & 0.69& 2.38 & 3.31 & 3.51 &  3.70  & 3.79  & 3.88  & 3.94 &  3.99 &  4.05 & 4.08 & 4.08 & 3.77 & 3.28 & 2.48  &2.01\\
+                      &  (0.00)& (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01) & (0.01) &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.58 &1.30 & 1.50 & 1.54  & 1.57  & 1.58  & 1.60 &  1.61  & 1.62  & 1.63 & 1.64 & 1.65 & 1.65 & 1.63 & 1.56 & 1.47\\
+                      &  (0.00)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)  &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表7 (續):在平滑常數$\lambda$=0.2，樣本數$n=5$，(d$_1$,d$_2$)=(0.25,1.5)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$}
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.44 &0.43 & 0.43 & 0.43  & 0.43  & 0.43  & 0.43  & 0.43  & 0.43  & 0.43  & 0.43 & 0.44 & 0.44 & 0.45 & 0.47&  0.48\\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 0.66 &1.94 & 1.89 & 1.83 &  1.78 &  1.75  & 1.71 &  1.68  & 1.66 &  1.62  & 1.60 & 1.52 & 1.41 & 1.32 & 1.13 & 0.95 \\
+                      & (0.00) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.00) & (0.01)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 0.64 &4.15 & 8.40 & 8.90 &  8.84 &  8.57  & 8.20 &  7.82 &  7.43 &  6.86  & 6.44 & 5.26 & 3.66&  2.70 & 1.76 & 1.28\\
+                      & (0.00)& (0.02)& (0.04)& (0.05)& (0.04)& (0.04)& (0.04)& (0.04)& (0.03)&  (0.03)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)   &   (0.00)\\ \hline
+\multirow{2}{*}{0.82}  & 0.63& 4.61&15.37 &19.49 & 22.15 & 22.32 & 21.59 & 20.44 & 18.99 & 16.45 & 14.36 & 8.73 & 4.36 & 2.90 & 1.79 & 1.29\\
+                      & (0.00)& (0.02)& (0.09)& (0.12)& (0.14)& (0.14)& (0.13)& (0.12)& (0.11)&  (0.09)&  (0.07)&  (0.03)&  (0.01)&  (0.01)&  (0.01) &   (0.00)\\ \hline
+\multirow{2}{*}{0.9}  &0.61& 4.72 &26.39 &47.16&  79.13 & 94.82& 102.57& 100.81 & 92.10  &70.68 & 51.62 &15.35 & 4.87 & 3.02 & 1.80 & 1.29\\
+                      & (0.00)& (0.03)& (0.17)& (0.32)& (0.54)& (0.65)& (0.71)& (0.69)& (0.63)&  (0.47)&  (0.34)&  (0.08)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  &0.60 &4.60& 29.41 &61.60 &141.12 &207.96& 257.84 &261.16& 226.41& 145.12 & 89.35& 19.14 & 5.09 & 3.06 & 1.80 & 1.29 \\                
+					  & (0.00)& (0.02)& (0.19)& (0.42)& (0.98)& (1.46)& (1.82)& (1.83)& (1.58)&  (1.00)&  (0.60)&  (0.11)&  (0.02)&  (0.01)&  (0.01) &    (0.00)\\ \hline
+\multirow{2}{*}{1}  & 0.59 &4.34 &26.31& 57.10 &146.87 &251.96& 370.29 &412.23 &348.32 &198.62 &112.64& 21.37 & 5.22 & 3.08 & 1.80 & 1.29\\
+                      & (0.00)& (0.02)& (0.17)& (0.39)& (1.02)& (1.75)& (2.57)& (2.87)& (2.44)&  (1.39)&  (0.76)&  (0.13)&  (0.02)&  (0.01)&  (0.01) &     (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 0.58& 4.00& 20.09& 38.16&  84.67& 139.28& 206.51& 265.79& 269.23& 185.97& 111.86 &22.02 & 5.28 & 3.09 & 1.80 & 1.29\\
+                      & (0.00)& (0.02)& (0.13)& (0.25)& (0.58)& (0.97)& (1.43)& (1.85)& (1.87)&  (1.30)& (0.76)&  (0.13)&  (0.02)&  (0.01)&  (0.01)  &     (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &0.57 &3.66& 14.44& 23.46 & 41.62 & 58.82 & 79.28& 100.69 &116.74& 112.83 & 85.62& 21.07 & 5.29 & 3.09 & 1.81 & 1.29\\
+                      &  (0.00)& (0.02)& (0.09)& (0.15)& (0.28)& (0.40)& (0.54)& (0.69)& (0.80)&  (0.77)&  (0.58)&  (0.12)&  (0.02)&  (0.01)&  (0.01)  &     (0.00)\\ \hline
+\multirow{2}{*}{1.17}  &0.56& 3.21 & 9.21& 12.67 & 17.77 & 21.53&  25.55 & 29.60 & 33.41 & 37.27 & 36.57& 17.17 & 5.18 & 3.09  &1.81 & 1.29\\
+                      & (0.00)& (0.02)& (0.05)& (0.08)& (0.11)& (0.14)& (0.16)& (0.19)& (0.21)&  (0.24)&  (0.23)&  (0.10)&  (0.02)&  (0.01)&  (0.01)    &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.54 &2.74 & 5.99 & 7.27  & 8.89 &  9.91 & 10.87 & 11.79 & 12.52 & 13.31 & 13.54 &10.76 & 4.88 & 3.05 & 1.80 & 1.29\\
+                       & (0.00)& (0.02)& (0.03)& (0.04)& (0.05)& (0.06)& (0.06)& (0.07)& (0.07)&  (0.08)&  (0.07)&  (0.05)&  (0.02)&  (0.01)&  (0.01) &   (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &  0.50& 1.76&  2.57 & 2.75 & 2.93 &  3.01  & 3.09 &  3.16 &  3.21  & 3.27  & 3.29 & 3.28 & 2.96 & 2.49 & 1.74 & 1.28\\
+                      &  (0.00)& (0.01)& (0.01)& (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01) & (0.01) &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.44& 0.95 & 1.09 & 1.11  & 1.13 &  1.13  & 1.14 &  1.14  & 1.14 &  1.14  & 1.14 & 1.12 & 1.05&  0.99 & 0.87 & 0.77\\
+                      &  (0.00)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)&  (0.00)&  (0.00)  &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表8 :在平滑常數$\lambda$=0.05，樣本數$n=5$，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$}
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.46 &0.26 & 0.22 & 0.22  & 0.22  & 0.21  & 0.21  & 0.21  & 0.21  &0.21 & 0.21& 0.20& 0.20 &0.20& 0.20& 0.20\\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 1.01& 3.16 & 3.08 & 3.01 &  2.92 &  2.87  & 2.83  & 2.80 &  2.76 & 2.72  &2.68  &2.57& 2.44& 2.35 &2.25& 2.16 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 0.96 &5.65 & 8.73 & 8.93  & 8.75 &  8.53&   8.26 &  7.98 &  7.72  &7.33 & 7.01& 6.13 &4.89 &3.99& 2.88 &2.34\\
+                      & (0.01)&   (0.02)&  (0.04)&  (0.04)&  (0.03)&  (0.03)&  (0.03)&  (0.03)&  (0.03)&  (0.02)&  (0.02)&  (0.02)& (0.01)&  (0.01)& (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{0.82}  & 0.93 &6.10 &12.58& 14.06 & 14.45 & 14.09 & 13.47 & 12.75 & 12.04 &10.97 &10.15 &8.00& 5.54& 4.21& 2.90& 2.34\\
+                      & (0.01)&   (0.03)&  (0.06)&  (0.06)&  (0.07)&  (0.06)&  (0.06)&  (0.05)&  (0.05)&  (0.04)&  (0.03)&  (0.02)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{0.9}  &0.89& 6.23& 18.76&27.40 & 38.44&  40.88 & 38.56 & 33.58 & 28.27 &21.45& 17.45 &10.57 &6.08 &4.33 &2.91& 2.34\\
+                      & (0.01)&   (0.03)&  (0.10)&  (0.15)&  (0.22)&  (0.23)&  (0.21)&  (0.18)&  (0.14)&  (0.09)&  (0.07)&  (0.04)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                               
+\multirow{2}{*}{0.95}  &0.87& 6.12& 21.02 &37.75 & 87.10& 129.51& 140.21& 112.52 & 76.52 &40.49& 26.39& 12.06& 6.25 &4.36& 2.91& 2.34 \\                
+					  & (0.01)&   (0.03)&  (0.11)&  (0.22)&  (0.57)&  (0.86)&  (0.93)&  (0.73)&  (0.47)&  (0.22)&  (0.12)&  (0.05)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{1}  &  0.85 &5.88 &19.94& 36.73 &104.83& 225.25& 370.03 &318.94& 176.03& 66.53& 35.97& 13.09 &6.34 &4.38& 2.91& 2.34\\
+                      & (0.01)&   (0.03)&  (0.11)&  (0.22)&  (0.69)&  (1.55)&  (2.59)&  (2.22)&  (1.18)&  (0.40)&  (0.19)&  (0.05)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 0.83 &5.56& 16.73& 26.91 & 55.30 & 89.64& 131.48& 148.85 &121.96 &62.54 &36.37& 13.43 &6.37 &4.38& 2.91 &2.34\\
+                      & (0.01)&   (0.03)&  (0.09)&  (0.15)&  (0.35)&  (0.58)&  (0.88)&  (1.00)&  (0.80)&  (0.38)&  (0.20)&  (0.06)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &0.81& 5.20& 13.40& 18.67&  28.08 & 35.53 & 42.55 & 46.68 & 46.03& 36.84& 27.77& 13.02& 6.37 &4.38& 2.91& 2.34\\
+                      &  (0.01)&   (0.03)&  (0.07)&  (0.10)&  (0.16)&  (0.21)&  (0.25)&  (0.28)&  (0.27)&  (0.20)&  (0.14)&  (0.05)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{1.17}  &0.78& 4.69 & 9.95& 12.16 & 14.95 & 16.58 & 17.85 & 18.63 & 18.87& 18.12& 16.76& 11.42& 6.30&4.38& 2.91& 2.34\\
+                      & (0.01)&   (0.02)&  (0.05)&  (0.06)&  (0.08)&  (0.08)&  (0.09)&  (0.09)&  (0.09)& (0.08)&  (0.07)&  (0.04)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.75& 4.12 & 7.44  &8.44  & 9.51 & 10.06 & 10.49 & 10.78 & 10.96& 10.97 &10.76 &9.16& 6.05& 4.35& 2.91& 2.34\\
+                       & (0.01)&   (0.02)&  (0.04)&  (0.04)&  (0.05)&  (0.05)&  (0.05)&  (0.05)&  (0.05)&  (0.05)&  (0.04)&  (0.03)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &  0.66 &2.77 & 3.87 & 4.10  & 4.31 &  4.41&   4.49  & 4.55 &  4.61 & 4.66 & 4.68& 4.64 &4.25& 3.73& 2.85& 2.33\\
+                      &  (0.01)&   (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.02)& (0.01)&  (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.52& 1.44 & 1.70&  1.75  & 1.79  & 1.81  & 1.83 &  1.85  & 1.86 & 1.89&  1.90 &1.94& 1.98& 1.99& 2.00& 1.98
+\\
+                      &  (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)  &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表8 (續):在平滑常數$\lambda$=0.1，樣本數$n=5$，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$} 
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.26& 0.20&  0.20 & 0.20 &  0.20  & 0.20  & 0.20 &  0.20  & 0.20 &  0.20 & 0.20 & 0.20 & 0.20&  0.20 & 0.20 & 0.20\\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 0.56& 2.05 & 2.05&  2.01  & 1.95 &  1.92  & 1.89  & 1.87  & 1.84 &  1.81 & 1.80 & 1.76 & 1.72 & 1.70 & 1.56 & 1.32 \\
+                      & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01)  & (0.01) & (0.01) & (0.01)&(0.01)\\ \hline
+\multirow{2}{*}{0.75}  & 0.55& 4.09 & 6.90 & 7.14 &  6.99 &  6.77  & 6.52 &  6.25 &  6.00  & 5.62 & 5.33 & 4.53 & 3.47 & 2.76 & 1.94 & 1.46\\
+                      & (0.01)&    (0.02)& (0.03)& (0.03)& (0.03)& (0.03)& (0.03)& (0.03)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01) & (0.01)\\ \hline
+\multirow{2}{*}{0.82}  & 0.54 &4.47 &11.03 &12.84 & 13.53 & 13.14&  12.38 & 11.48&  10.57  & 9.29 & 8.36  &6.17 & 4.03 & 2.98&  1.98 & 1.46\\
+                      & (0.01)&   (0.02)& (0.06)& (0.07)& (0.07)& (0.07)& (0.06)& (0.06)& (0.05)&  (0.04)&  (0.03)&  (0.02)&  (0.01)&  (0.01)&  (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{0.9}  &0.52& 4.60 &18.39 &30.61 & 48.14 & 54.18 & 52.93 & 46.86 & 38.52 & 26.24& 18.88&  8.76 & 4.53 & 3.13 & 1.99 & 1.46\\
+                      & (0.01)&   (0.03)& (0.11)& (0.19)& (0.32)& (0.36)& (0.35)& (0.30)& (0.24)&  (0.15)&  (0.10)&  (0.03)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                               
+\multirow{2}{*}{0.95}  &0.51& 4.50& 21.00& 43.20 &107.86& 161.81& 187.71 &167.22 &123.82 & 63.68 &35.81& 10.56 & 4.74 & 3.17  &1.99  &1.46\\                
+					  & (0.01)&  (0.02)& (0.13)& (0.28)& (0.74)& (1.11)& (1.29)& (1.14)& (0.84)&  (0.41)&  (0.21)&  (0.05)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{1}  &  0.49& 4.31&19.52 &41.17 &123.88 &238.80& 370.23 &366.16 &246.70 &103.90 &51.69 &11.97 & 4.86&  3.19 & 1.99 & 1.46\\
+                      & (0.01)& (0.02)& (0.12)& (0.27)& (0.86)& (1.66)& (2.60)& (2.57)& (1.72)&  (0.70)&  (0.33)&  (0.06)&  (0.02) & (0.01)& (0.01)& (0.01)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 0.48& 4.05& 15.59& 28.15 & 64.78& 107.59& 163.17& 198.06& 177.61 & 96.75& 52.09 &12.44 & 4.91 & 3.20 & 1.99 & 1.46\\
+                      & (0.01)&   (0.02)& (0.09)& (0.18)& (0.43)& (0.74)& (1.13)& (1.39)& (1.23)&  (0.64)&  (0.33)&  (0.06)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &0.48& 3.75& 11.75& 17.97 & 30.20&  40.59 & 51.92 & 61.11&  64.48 & 53.10& 37.19& 11.87&  4.91 & 3.20 & 2.00 & 1.46\\
+                      &  (0.01)&   (0.02)& (0.07)& (0.11)& (0.19)& (0.26)& (0.34)& (0.40)& (0.42)&  (0.34)&  (0.23)&  (0.06)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{1.17}  & 0.46& 3.33 & 8.16& 10.51 & 13.72 & 15.81 & 17.57 & 18.93 & 19.60 & 19.05 &17.18 & 9.86 & 4.81 & 3.20 & 2.00 & 1.46\\
+                      & (0.00)&   (0.02)& (0.05)& (0.06)& (0.08)& (0.09)& (0.10)& (0.11)& (0.11)&  (0.11)&  (0.09)&  (0.04)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.45& 2.90 & 5.76 & 6.73 &  7.80  & 8.38  & 8.84  & 9.16 &  9.36 &  9.35 & 9.10 & 7.35 & 4.53 & 3.16&  1.99 & 1.46\\
+                       & (0.01)&   (0.02)& (0.03)& (0.04)& (0.04)& (0.05)& (0.05)& (0.05)& (0.05)&  (0.05)&  (0.04)&  (0.03)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &  0.40& 1.89 & 2.76 & 2.94  & 3.11   &3.19   &3.26  & 3.31 &  3.35 &  3.38 & 3.39 & 3.34 & 3.01 & 2.61 & 1.93 & 1.46\\
+                      &  (0.00)&   (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.33 &0.96 & 1.12&  1.14  & 1.16  & 1.17  & 1.18 &  1.18  & 1.18 &  1.18&  1.18 & 1.16 & 1.10 & 1.04 & 0.89 & 0.73
+\\
+                      &  (0.00)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)  &     (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表8 (續):在平滑常數$\lambda$=0.2，樣本數$n=5$，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370的情況下，EWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$} 
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.18 &0.17 & 0.17 & 0.17 &  0.17 &  0.17  & 0.17 &  0.17 &  0.17  & 0.17  & 0.17 & 0.17& 0.18 &0.18 &0.19& 0.19\\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 0.34& 1.29 & 1.26 & 1.22  & 1.16 &  1.13  & 1.10  & 1.07  & 1.04 &  1.00  & 0.96 & 0.85 &0.68& 0.55 &0.39& 0.33 \\
+                      & (0.00) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01)  & (0.01) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 0.34 &3.11 & 6.51 & 6.89  & 6.82 &  6.55  & 6.19 &  5.81  & 5.44 &  4.92 &  4.53 & 3.59& 2.48 &1.84& 1.12& 0.72\\
+                      & (0.00)& (0.02)& (0.04)& (0.04)& (0.04)& (0.04)& (0.03)& (0.03)& (0.03)& (0.02)& (0.02)& (0.01)& (0.01)& (0.01)& (0.01) & (0.01)\\ \hline
+\multirow{2}{*}{0.82}  & 0.33& 3.52& 12.59& 16.16 & 18.41 & 18.40 & 17.54 & 16.21 & 14.63 & 12.04 & 10.07 & 5.76 &3.03 &2.04& 1.16& 0.73\\
+                      & (0.00)& (0.02)& (0.08)& (0.11)& (0.12)& (0.12)& (0.11)& (0.10)& (0.09)& (0.07)& (0.05)& (0.02)&  (0.01)&  (0.01)&  (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{0.9}  &0.32& 3.65 &22.92 &42.53 & 73.43 & 88.67 & 95.64 & 92.77 & 82.88  &60.42 & 41.81& 10.73& 3.55& 2.20 &1.18& 0.73\\
+                      & (0.00)& (0.02)& (0.15)& (0.30)& (0.51)& (0.62)& (0.67)& (0.64)& (0.57)& (0.41)& (0.28)& (0.06)& (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                               
+\multirow{2}{*}{0.95}  &0.32 &3.57 &25.91& 56.86& 135.88& 203.49& 253.92& 256.39& 219.56 &135.73 & 79.92& 14.63& 3.82& 2.26 &1.19& 0.73\\                
+					  & (0.00)& (0.02)& (0.18)& (0.40)& (0.95)& (1.44)& (1.80)& (1.81)& (1.54)& (0.95)& (0.54)& (0.09)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{1}  &  0.32 &3.37& 23.17& 52.67& 142.06& 248.84& 370.02 &413.33& 347.49 &193.52 &106.02& 17.40 &4.00 &2.30& 1.19& 0.73\\
+                      & (0.00)& (0.02)& (0.16)& (0.37)& (0.99)& (1.73)& (2.57)& (2.89)& (2.44)& (1.37)& (0.73)& (0.11)&  (0.02) & (0.01)& (0.01)& (0.01)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 0.32 &3.10 &17.46& 34.64 & 80.16& 134.74& 202.51& 262.10 &264.98& 179.95 &105.25 &18.27 &4.09 &2.31& 1.19 &0.73\\
+                      & (0.00)&   (0.02)& (0.12)& (0.24)& (0.55)& (0.95)& (1.41)& (1.84)& (1.85)& (1.27)& (0.72)& (0.11)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &0.30& 2.83& 12.34& 20.75 & 38.13 & 54.79 & 74.66 & 95.23& 110.13& 104.63 & 77.35& 17.13 &4.09& 2.32& 1.19& 0.73\\
+                      &  (0.00)&   (0.02)& (0.08)& (0.14)& (0.26)& (0.38)& (0.52)& (0.66)& (0.76)& (0.72)& (0.53)& (0.11)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline
+\multirow{2}{*}{1.17}  & 0.30 &2.47 & 7.71& 10.85 & 15.50 & 18.97 & 22.58 & 26.11 & 29.22 & 31.87 & 30.40& 13.02& 3.95& 2.31& 1.19& 0.73\\
+                      & (0.00)&   (0.02)& (0.05)& (0.07)& (0.10)& (0.13)& (0.15)& (0.17)& (0.19)& (0.21)& (0.20)& (0.08)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.28& 2.09 & 4.91 & 6.04 &  7.44 &  8.34  & 9.13  & 9.84 & 10.31 & 10.71 & 10.56 & 7.71 &3.59& 2.25& 1.19& 0.73\\
+                       & (0.00)&   (0.02)& (0.03)& (0.04)& (0.05)& (0.05)& (0.06)& (0.06)& (0.06)& (0.07)& (0.06)& (0.04)&  (0.02)& (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &  0.26 &1.30 & 2.00 & 2.15 &  2.29 &  2.36&   2.41  & 2.46  & 2.48  & 2.50 &  2.49 & 2.39& 2.04& 1.67& 1.08& 0.71\\
+                      &  (0.00)&   (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)& (0.01)& (0.01)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.22 &0.63  &0.74  &0.75  & 0.75 &  0.75  & 0.75 &  0.75  & 0.74 &  0.73  & 0.72 & 0.67& 0.58& 0.50& 0.38& 0.31
+\\
+                      &  (0.00)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.00)&  (0.00)  &     (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表9 :在平滑常數$\psi$=0.05，樣本數$n=5$，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370的情況下，AEWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$} 
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.10& 0.10& 0.10 & 0.10 & 0.10 &  0.10  & 0.10  & 0.10  & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10\\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  & 0.14 &0.38& 0.37 & 0.34 & 0.31 &  0.28  & 0.27 &  0.25  & 0.23 & 0.21 & 0.19&  0.14 & 0.11&  0.10 & 0.10 & 0.10 \\
+                      & (0.00) & (0.01) & (0.01) & (0.01) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 0.14 &0.99 &2.13 & 2.34 & 2.45 &  2.43  & 2.40 &  2.31  & 2.21 & 2.03 & 1.86 & 1.35 & 0.71 & 0.42 & 0.19 & 0.12\\
+                      & (0.00)& (0.01)& (0.03)& (0.03)& (0.03)& (0.03)& (0.03)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)& (0.00)& (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.82}  & 0.14& 1.09 &3.37 & 4.21 & 4.89  & 5.03  & 4.97 &  4.75 &  4.45 & 3.94 & 3.53 & 2.34 & 1.11 & 0.61 & 0.24 & 0.14\\
+                      & (0.00)& (0.02)& (0.04)& (0.05)& (0.06)& (0.06)& (0.05)& (0.05)& (0.04)&  (0.04)&  (0.03)&  (0.02)&  (0.01)&  (0.01)&  (0.00)& (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 0.14& 1.12 &5.23 & 8.89 &15.01 & 18.46 & 19.59 & 18.01 & 15.16 &10.88 & 8.35 & 4.02 & 1.56 & 0.79 & 0.29 & 0.15\\
+                      & (0.00)& (0.02)& (0.07)& (0.11)& (0.19)& (0.22)& (0.23)& (0.20)& (0.16)&  (0.10)&  (0.08)&  (0.04)& (0.02)& (0.01)& (0.00)& (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  &0.14& 1.09& 5.80& 12.75& 38.55 & 71.52 & 89.39 & 70.54 & 45.25 &22.27& 14.21 & 5.07 & 1.79 & 0.88 & 0.31 & 0.16\\                
+					  & (0.00)& (0.02)& (0.08)& (0.17)& (0.51)& (0.88)& (1.06)& (0.80)& (0.50)&  (0.23)&  (0.14)&  (0.05)&  (0.02)& (0.01)& (0.00)& (0.00)\\ \hline
+\multirow{2}{*}{1}  &  0.14 &1.03& 5.28 &11.83 &48.88 &156.67& 370.24& 293.32 &128.62& 40.99 &21.47 & 5.90 & 1.94 & 0.93 & 0.31 & 0.16\\
+                      & (0.00)& (0.01)& (0.07)& (0.16)& (0.65)& (1.94)& (4.29)& (3.29)& (1.42)&  (0.44)&  (0.22)&  (0.05)&  (0.02) & (0.01)& (0.00)& (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 0.14 &0.97& 4.20 & 7.85& 20.21 & 40.43 & 73.62 & 93.68 & 74.84& 36.27& 21.38 & 6.14 & 2.01 & 0.97 & 0.32 & 0.16\\
+                      & (0.00)&   (0.01)& (0.06)& (0.11)& (0.27)& (0.52)& (0.91)& (1.09)& (0.85)&  (0.39)&  (0.22)&  (0.06)&  (0.02)& (0.01)& (0.00)& (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &0.13& 0.91& 3.27 & 5.09 & 9.05 & 12.83 & 17.28 & 20.78 & 21.67& 18.04 &14.05 & 5.66 & 2.01 & 0.98 & 0.32 & 0.16\\
+                      &  (0.00)&   (0.01)& (0.04)& (0.07)& (0.12)& (0.17)& (0.22)& (0.25)& (0.25)&  (0.19)&  (0.14)&  (0.05)&  (0.02)& (0.01)& (0.00)& (0.00)\\ \hline
+\multirow{2}{*}{1.17}  & 0.13 &0.81& 2.29 & 3.10 & 4.28 &  5.11  & 5.97 &  6.64  & 7.16 & 7.26 & 6.88 & 4.41 & 1.87 & 0.95 & 0.32 & 0.16\\
+                      & (0.00)&   (0.01)& (0.03)& (0.04)& (0.05)& (0.06)& (0.07)& (0.08)& (0.08)&  (0.08)&  (0.07)&  (0.04)&  (0.02)& (0.01)& (0.00)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.13 &0.70 &1.64 & 2.02 & 2.49 &  2.78  & 3.04 &  3.25  & 3.41 & 3.52 & 3.50 & 2.92 & 1.56 & 0.87 & 0.32 & 0.16\\
+                       & (0.00)&   (0.01)& (0.02)& (0.03)& (0.03)& (0.03)& (0.04)& (0.04)& (0.04)&  (0.04)&  (0.04)&  (0.03)&  (0.02)& (0.01)& (0.00)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &  0.13 &0.46 &0.74 & 0.81 & 0.88  & 0.91  & 0.94 &  0.96  & 0.98 & 0.98 & 0.98 & 0.89 & 0.64 & 0.43&  0.21 & 0.13\\
+                      &  (0.00)&   (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)&  (0.01)& (0.00)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.12& 0.25 &0.28 & 0.28  &0.28  & 0.28  & 0.28 &  0.27  & 0.27 & 0.25 & 0.25 & 0.21 & 0.16  &0.13 & 0.11 & 0.10
+\\
+                      &  (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表9 (續):在平滑常數$\psi$=0.1，樣本數$n=5$，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370的情況下，AEWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$} 
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.10& 0.10& 0.10 & 0.10 & 0.10 &  0.10  & 0.10  & 0.10  & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10\\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  &0.17& 0.65 &0.64 & 0.60 & 0.56  & 0.53  & 0.50 &  0.47  & 0.44 & 0.40 & 0.37 & 0.27 & 0.16  & 0.12 & 0.10 & 0.10 \\
+                      & (0.00) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.00) & (0.00)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 0.18 &1.61& 3.48 & 3.84 & 4.00  & 3.98  & 3.89 &  3.76 &  3.61 & 3.35 & 3.09 & 2.34 & 1.41 &  0.93 & 0.45 & 0.23\\
+                      & (0.00)& (0.02)& (0.04)& (0.04)& (0.04)& (0.04)& (0.04)& (0.03)& (0.03)&  (0.03)&  (0.03)&  (0.02)&  (0.01)&  (0.01)&  (0.01) & (0.00)\\ \hline
+\multirow{2}{*}{0.82}  &0.18 &1.76 &5.57  &6.97 & 8.08 &  8.38  & 8.29 &  7.93  & 7.45 & 6.63 & 5.86 & 3.86 & 1.98 & 1.20 & 0.53 & 0.26\\
+                      & (0.00)& (0.02)& (0.06)& (0.07)& (0.08)& (0.08)& (0.08)& (0.07)& (0.07)&  (0.06)&  (0.05)&  (0.03)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 0.18& 1.78& 8.61& 14.67 &24.97 & 30.82 & 33.38 & 31.38 & 26.91& 19.63& 14.77 & 6.60&  2.58 & 1.40 & 0.57 & 0.27\\
+                      & (0.00)& (0.02)& (0.10)& (0.16)& (0.26)& (0.31)& (0.33)& (0.30)& (0.24)&  (0.16)&  (0.12)&  (0.05)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  &0.17& 1.73 &9.55 &20.72 &59.68 &104.06& 133.88 &113.78  &78.96 &40.44 &25.10 & 8.29 & 2.84 & 1.48 & 0.58 & 0.27\\                
+					  & (0.00)& (0.02)& (0.11)& (0.24)& (0.66)& (1.10)& (1.37)& (1.13)& (0.75)&  (0.36)&  (0.21)&  (0.07)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline
+\multirow{2}{*}{1}  & 0.17& 1.65& 8.68 &19.28 &70.23 &184.45& 370.05& 345.85 &190.17& 70.00 &36.52 & 9.48 & 3.00 & 1.52 & 0.58 & 0.27\\
+                      & (0.00)& (0.02)& (0.10)& (0.22)& (0.78)& (1.99)& (3.84)& (3.45)& (1.86)&  (0.64)&  (0.32)&  (0.08)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 0.17 &1.54 &6.83 &12.86& 31.70 & 60.18& 107.56& 138.31& 117.86 &62.84 &36.27 & 9.84 & 3.08 & 1.54 & 0.58 & 0.27\\
+                      & (0.00)&   (0.02)& (0.08)& (0.15)& (0.35)& (0.66)& (1.12)& (1.40)& (1.16)&  (0.58)&  (0.32)&  (0.08)&  (0.03)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &0.17& 1.44 &5.27 & 8.35& 14.66 & 20.73 & 28.21&  34.58 & 36.78 &31.51 &24.35 & 9.20 & 3.07 &1.55 & 0.59 & 0.27\\
+                      &  (0.00)&   (0.02)& (0.06)& (0.09)& (0.16)& (0.22)& (0.29)& (0.35)& (0.35)&  (0.28)&  (0.21)&  (0.08)&  (0.03)&  (0.01)&  (0.01)& (0.00)\\ \hline
+\multirow{2}{*}{1.17}  & 0.17 &1.28& 3.70&  5.04 & 7.05  & 8.46  & 9.85 & 11.07 & 11.86 &12.25 &11.64 & 7.19 & 2.92 & 1.53 & 0.58 & 0.27\\
+                      & (0.00)&   (0.02)& (0.04)& (0.06)& (0.08)& (0.09)& (0.10)& (0.11)& (0.11)&  (0.11)&  (0.10)&  (0.06)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.16 &1.10 &2.60  &3.22 & 3.98  & 4.43  & 4.89 &  5.24  & 5.49 & 5.74 & 5.73 & 4.74&  2.54 & 1.45 & 0.58 & 0.27\\
+                       & (0.00)&   (0.01)& (0.03)& (0.04)& (0.04)& (0.05)& (0.05)& (0.05)& (0.05)&  (0.05)&  (0.05)&  (0.04)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &  0.16& 0.71 &1.15 & 1.27 & 1.37 &  1.42  & 1.48  & 1.52  & 1.54 & 1.56 & 1.57 & 1.48 & 1.13 & 0.82 & 0.44 & 0.24\\
+                      &  (0.00)&   (0.01)& (0.01)& (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.15& 0.37& 0.42 & 0.42 & 0.42  & 0.42  & 0.42 &  0.41 &  0.41  &0.39 & 0.38 & 0.33 & 0.24 & 0.18 & 0.12 & 0.11
+\\
+                      &  (0.00) & (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+\centering
+\leftline{表9 (續):在平滑常數$\psi$=0.2，樣本數$n=5$，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370的情況下，AEWMA VSI管制圖在不同$\beta$及$\eta$下的ATS$_1$} 
+\leftline{(括號內為標準差)}
+\label{ATS_10-7}
+\ \\
+\begin{tabular}{ccccccccccccccccc}
+\hline
+$\eta \setminus \beta $        & 0.50   & 1.00   & 1.25   & 1.32   & 1.40   & 1.45   & 1.50   & 1.55   & 1.6   & 1.68   & 1.75   & 2.00   & 2.50   & 3.00   & 4.00  &5.00 \\ \hline
+\multirow{2}{*}{0.1}  & 0.10& 0.10& 0.10 & 0.10 & 0.10 &  0.10  & 0.10  & 0.10  & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10 & 0.10\\
+                      & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline
+\multirow{2}{*}{0.5}  &0.20 &0.82 & 0.82 & 0.78 & 0.73 &  0.70  & 0.66 &  0.63  & 0.60  &0.56 & 0.52 & 0.40 & 0.26 & 0.18 & 0.14 & 0.13 \\
+                      & (0.00) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.01) & (0.00)  & (0.00) & (0.00) & (0.00)&(0.00)\\ \hline
+\multirow{2}{*}{0.75}  & 0.20& 1.99 & 4.29 & 4.73 & 4.93 &  4.93  & 4.86  & 4.74  & 4.57 & 4.29 & 4.03 & 3.14 & 1.96 & 1.29 & 0.64 & 0.35\\
+                      & (0.00)& (0.02)& (0.04)& (0.04)& (0.04)& (0.04)& (0.04)& (0.04)& (0.03)&  (0.03)&  (0.03)&  (0.02)&  (0.01)&  (0.01)&  (0.01) & (0.00)\\ \hline
+\multirow{2}{*}{0.82}  &0.20& 2.18 & 6.76 & 8.48 & 9.70  & 9.99  & 9.97 &  9.63  & 9.19 & 8.40 & 7.66 & 5.23 & 2.64 & 1.57 & 0.71 & 0.37\\
+                      & (0.00)& (0.02)& (0.06)& (0.07)& (0.08)& (0.08)& (0.08)& (0.07)& (0.07)&  (0.06)&  (0.05)&  (0.03)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline
+\multirow{2}{*}{0.9}  & 0.20& 2.20& 10.71 &18.92 &32.78 & 39.72 & 41.16&  37.42 & 31.37& 22.81& 17.42&  8.37 & 3.27 & 1.78 & 0.75 & 0.37\\
+                      & (0.00)& (0.02)& (0.10)& (0.17)& (0.28)& (0.33)& (0.33)& (0.29)& (0.23)&  (0.16)&  (0.11)&  (0.06)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline                                               
+\multirow{2}{*}{0.95}  &0.20& 2.12 &12.06 &27.14& 79.56 &134.90& 170.07& 152.01 &106.38 &50.90 &29.28  &9.99  &3.52 & 1.85 & 0.75 & 0.37\\                
+					  & (0.00)& (0.02)& (0.11)& (0.25)& (0.70)& (1.15)& (1.42)& (1.25)& (0.85)&  (0.38)&  (0.20)&  (0.07)&  (0.03)&  (0.01)&  (0.01)& (0.00)\\ \hline
+\multirow{2}{*}{1}  & 0.20 &2.03 &10.91 &25.01 &89.68& 209.17& 369.99& 379.06 &240.67 &91.06 &43.11 &11.10 & 3.67 & 1.88 & 0.75 & 0.37\\
+                      & (0.00)& (0.02)& (0.10)& (0.23)& (0.80)& (1.80)& (3.08)& (3.11)& (1.94)&  (0.71)&  (0.32)&  (0.08)&  (0.03)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                     
+\multirow{2}{*}{1.05}  & 0.20 &1.89 & 8.49 &16.24& 41.92 & 79.43& 136.00& 178.91 &161.54 &83.60 &43.39& 11.43 & 3.72 & 1.89 & 0.76 & 0.37\\
+                      & (0.00)&   (0.02)& (0.08)& (0.15)& (0.38)& (0.69)& (1.16)& (1.48)& (1.32)&  (0.66)&  (0.33)&  (0.08)&  (0.03)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                                                                                          
+\multirow{2}{*}{1.1}  &0.19 &1.74 & 6.44 &10.27& 18.36 & 26.35 & 36.15 & 45.17 & 48.65 &41.02 &29.30 &10.88&  3.72&  1.90 & 0.76 & 0.37\\
+                      &  (0.00)&   (0.02)& (0.06)& (0.10)& (0.17)& (0.23)& (0.31)& (0.38)& (0.39)&  (0.32)&  (0.21)&  (0.08)&  (0.03)&  (0.01)&  (0.01)& (0.00)\\ \hline
+\multirow{2}{*}{1.17}  & 0.19 &1.54 & 4.49 & 6.06 & 8.41 & 10.09 & 11.69 & 13.11 & 14.00 &14.42 &13.75 & 8.87 & 3.59  &1.89 & 0.76&  0.37\\
+                      & (0.00)&   (0.02)& (0.04)& (0.06)& (0.08)& (0.09)& (0.10)& (0.11)& (0.11)&  (0.11)&  (0.10)&  (0.06)&  (0.03)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+                                                                     \multirow{2}{*}{1.25}  &0.18& 1.31 & 3.12 & 3.84 & 4.71 &  5.28  & 5.77  & 6.18  & 6.53 & 6.86 &6.93 & 6.01 & 3.22 & 1.82 & 0.75 & 0.37\\
+                       & (0.00)&   (0.01)& (0.03)& (0.04)& (0.04)& (0.05)& (0.05)& (0.05)& (0.05)&  (0.06)&  (0.05)&  (0.04)&  (0.02)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{1.5}  &  0.17 &0.85 & 1.37 & 1.50 & 1.63 &  1.70  & 1.76  & 1.81 &  1.84 & 1.88  &1.89 & 1.83 & 1.48 & 1.12 & 0.61 & 0.34\\
+                      &  (0.00)&   (0.01)&  (0.01)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)& (0.02)&  (0.02)&  (0.02)&  (0.02)&  (0.01)&  (0.01)&  (0.01)& (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\multirow{2}{*}{2}  &0.16& 0.43 & 0.49 & 0.50 & 0.50 &  0.50  & 0.50 &  0.49  & 0.49 & 0.47 & 0.46 & 0.41 & 0.31  &0.24 & 0.16 & 0.12
+\\
+                      &  (0.00) & (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)& (0.01)&  (0.01)&  (0.01) & (0.01) & (0.00) & (0.00) & (0.00) & (0.00)\\ \hline                                                                                                                                                                                                                                                                                    
+\end{tabular}
+\end{sidewaystable}
+
+\begin{table}[htbp]
+\centering
+\centerline{表10 :碳纖維拉扯強度資料}
+\ \\
+\label{real data}
+\begin{tabular}{c ccccc}
+\hline
+樣本 & \multicolumn{5}{c}{壓力(gigapascal)}      \\ \hline
+1    & 3.70 & 2.74 & 2.73 & 2.50 & 3.60 \\
+2    & 3.11 & 3.27 & 2.87 & 1.47 & 3.11 \\
+3    & 4.42 & 2.41 & 3.19 & 3.22 & 1.69 \\
+4    & 3.28 & 3.09 & 1.87 & 3.15 & 4.90 \\
+5    & 3.75 & 2.43 & 2.95 & 2.97 & 3.39 \\
+6    & 2.96 & 2.53 & 2.67 & 2.93 & 3.22 \\
+7    & 3.39 & 2.81 & 4.20 & 3.33 & 2.55 \\
+8    & 3.31 & 3.31 & 2.85 & 2.56 & 3.56 \\
+9    & 3.15 & 2.35 & 2.55 & 2.59 & 2.38 \\
+10   & 2.81 & 2.77 & 2.17 & 2.83 & 1.92 \\
+11   & 1.41 & 3.68 & 2.97 & 1.36 & 0.98 \\
+12   & 2.76 & 4.91 & 3.68 & 1.84 & 1.59 \\
+13   & 3.19 & 1.57 & 0.81 & 5.56 & 1.73 \\
+14   & 1.59 & 2.00 & 1.22 & 1.12 & 1.71 \\
+15   & 2.17 & 1.17 & 5.08 & 2.48 & 1.18 \\
+16   & 3.51 & 2.17 & 1.69 & 1.25 & 4.38 \\
+17   & 1.84 & 0.39 & 3.68 & 2.48 & 0.85 \\
+18   & 1.61 & 2.79 & 4.70 & 2.03 & 1.80 \\
+19   & 1.57 & 1.08 & 2.03 & 1.61 & 2.12 \\
+20   & 1.89 & 2.88 & 2.82 & 2.05 & 3.65 \\ \hline
+\end{tabular}
+\end{table}
+
+
+\clearpage
+\newpage
+\begin{table}[htbp]
+\centering
+\centerline{表11:  在(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370的情況下對碳纖維拉扯強度後10組資料進行監控。}
+\label{CL}
+\centerline{$\lambda = 0.05 , \psi = 0.05$}
+\ \\
+\begin{tabular}{cc}
+\hline
+  & TS      
+ \\ \hline
+EWMA FSI      & 3 \\
+EWMA VSI      & 0.3  \\
+AEWMA VSI     & 0.2
+\\ \hline
+\multicolumn{2}{l}
+
+\end{tabular}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\centerline{$\lambda = 0.1 , \psi = 0.1$}\label{CL}
+\ \\
+\begin{tabular}{cc}
+\hline
+  & TS      
+ \\ \hline
+EWMA FSI      & 3 \\
+EWMA VSI      & 0.3  \\
+AEWMA VSI     & 0.2
+\\ \hline
+\multicolumn{2}{l}
+
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+
+\centerline{$\lambda = 0.2 , \psi = 0.2$}\label{CL}
+\ \\
+\begin{tabular}{cc}
+\hline
+  & TS      
+ \\ \hline
+EWMA FSI      & 2 \\
+EWMA VSI      & 0.2  \\
+AEWMA VSI     & 0.2
+\\ \hline
+\multicolumn{2}{l}
+
+\end{tabular}
+\end{table}
+
+
+\newpage
+\begin{table}[htbp]
+\centering
+\centerline{表12:  在(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370的情況下對前10組從}
+\centerline{weibull(5.25,3.16)後20組從weibull(9,3.2)生成的資料進行監控。}\label{CL}
+\centerline{$\lambda = 0.05 , \psi = 0.05$}
+\ \\
+\begin{tabular}{cc}
+\hline
+  & TS      
+ \\ \hline
+EWMA FSI      & 16 \\
+EWMA VSI      & 14.2  \\
+AEWMA VSI     & 1.6
+\\ \hline
+\multicolumn{2}{l}
+
+\end{tabular}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\centerline{$\lambda = 0.1 , \psi = 0.1$}
+\ \\
+\begin{tabular}{cc}
+\hline
+  & TS      
+ \\ \hline
+EWMA FSI      & 16 \\
+EWMA VSI      & 14.2  \\
+AEWMA VSI     & 3.4
+\\ \hline
+\multicolumn{2}{l}
+
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\centerline{$\lambda = 0.2 , \psi = 0.2$}
+\ \\
+\begin{tabular}{cc}
+\hline
+  & TS      
+ \\ \hline
+EWMA FSI      & 16 \\
+EWMA VSI      & 12.4  \\
+AEWMA VSI     & 8.8
+\\ \hline
+\multicolumn{2}{l}
+
+\end{tabular}
+\end{table}
+
+
+
+\newpage
+\section{\Kai{附圖}}
+\begin{figure}[htbp] 
+\centering
+\centerline{EWMA FSI和VSI管制圖}
+\includegraphics[width=0.75\textwidth]{005EC}
+\centerline{AEWMA VSI管制圖}
+\includegraphics[width=0.75\textwidth]{005w}
+\caption{在$\lambda$=0.05，$\psi$=0.05，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370下，對碳纖維拉扯資料的後10組進行監控的EWMA FSI和VSI管制圖及AEWMA VSI管制圖。}\label{ARL comparison10}
+\end{figure} 
+
+\begin{figure}[htbp] 
+\centering
+\centerline{EWMA FSI和VSI管制圖}
+\includegraphics[width=0.75\textwidth]{01EC}
+\centerline{AEWMA VSI管制圖}
+\includegraphics[width=0.75\textwidth]{01w}
+\leftline{圖 1(續): 在$\lambda$=0.1，$\psi$=0.1，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370下，對碳纖維} \\
+\leftline{拉扯資料的後10組進行監控的EWMA FSI和VSI管制圖及AEWMA VSI
+管}
+\leftline{制圖。}
+\end{figure} 
+
+\begin{figure}[htbp] 
+\centering
+\centerline{EWMA FSI和VSI管制圖}
+\includegraphics[width=0.75\textwidth]{02EC}
+\centerline{EWMA VSI管制圖}
+\includegraphics[width=0.75\textwidth]{02w}
+\leftline{圖 1(續): 在$\lambda$=0.2，$\psi$=0.2，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370下，對碳纖維} \\
+\leftline{拉扯資料的後10組進行監控的EWMA FSI和VSI管制圖及AEWMA VSI管}
+\leftline{制圖。}
+\end{figure} 
+
+\begin{figure}[htbp] 
+\centering
+\centerline{EWMA FSI和VSI管制圖}
+\includegraphics[width=0.75\textwidth]{005simEC}
+\centerline{AEWMA VSI管制圖}
+\includegraphics[width=0.75\textwidth]{005simw}
+\caption{在$\lambda$=0.05，$\psi$=0.05，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370下，對前10組從weibull(5.25,3.16)後20組從weibull(9,3.2)生成的資料進行監控的EWMA FSI和VSI管制圖及AEWMA VSI管制圖。}\label{ARL comparison10}
+\end{figure} 
+
+\begin{figure}[htbp] 
+\centering
+\centerline{EWMA FSI和VSI管制圖}
+\includegraphics[width=0.75\textwidth]{01simEC}
+\centerline{AEWMA VSI管制圖}
+\includegraphics[width=0.75\textwidth]{01simw}
+\leftline{圖 2(續): 在$\lambda$=0.1，$\psi$=0.1，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370下，對前10組}\\
+\leftline{從weibull(5.25,3.16)後20組從weibull(9,3.2)生成的資料進行監控的EWMA}
+\leftline{FSI和VSI管制圖及AEWMA VSI管制圖。}
+\end{figure}
+
+\begin{figure}[htbp] 
+\centering
+\centerline{EWMA FSI和VSI管制圖}
+\includegraphics[width=0.75\textwidth]{02simEC}
+\centerline{AEWMA VSI管制圖}
+\includegraphics[width=0.75\textwidth]{02simw}
+\leftline{圖 2(續): 在$\lambda$=0.2，$\psi$=0.2，(d$_1$,d$_2$)=(0.1,1.9)及整體ATS$_0$=370下，對前10組}\\
+\leftline{從weibull(5.25,3.16)後20組從weibull(9,3.2)生成的資料進行監控的EWMA}
+\leftline{FSI和VSI管制圖及AEWMA VSI管制圖。}
+\end{figure}
+
+
+%\begin{sidewaystable}[htbp]
+%\begin{tabular}{cccccc}
+%\hline
+%$\eta \setminus \beta $        & 1.40   & 1.45   & 1.50   & 1.55   & 1.60   \\ \hline
+%\multirow{2}{*}{0.9}  & 59.12&  62.07 & 59.93 & 55.11 & 49.72\\
+%                      & (0.30)& (0.32)& (0.30)& (0.26)& (0.22)\\ \hline                                               
+%\multirow{2}{*}{0.95}  &111.66& 154.41 &166.36 &143.82 &110.70 \\
+%                      & (0.67)& (0.96)& (1.04)& (0.88)& (0.64)\\ \hline
+%\multirow{2}{*}{1}  &127.45 &241.04 &370.20 &327.07 &200.27 \\
+%                      & (0.78)& (1.59)& (2.53)& (2.20)& (1.27)\\ \hline                                                                     
+%\multirow{2}{*}{1.05}  & 75.40 &111.30& 153.43 &174.06 &151.71\\
+%                      & (0.42)& (0.66)& (0.96)& (1.10)& (0.93)\\ \hline                                                                                                                                          
+%\multirow{2}{*}{1.1}  & 41.95 & 50.96 & 60.17 & 67.16 & 70.07\\
+%                      & (0.20)& (0.26)& (0.32)& (0.36)& (0.37)\\ \hline
+%
+%\end{tabular}
+%\end{sidewaystable}
+%
+%\begin{sidewaystable}[htbp]
+%\begin{tabular}{cccccc}
+%\hline
+%$\eta \setminus \beta $        & 1.40   & 1.45   & 1.50   & 1.55   & 1.60   \\ \hline
+%\multirow{2}{*}{0.9}  & 42.96&  45.54 & 43.21 & 38.19 & 32.71\\
+%                      & (0.23)& (0.25)& (0.23)& (0.19)& (0.15)\\ \hline                                               
+%\multirow{2}{*}{0.95}  &92.98& 135.70 &146.86 &120.41 &84.86 \\
+%                      & (0.59)& (0.89)& (0.96)& (0.77)& (0.51)\\ \hline
+%\multirow{2}{*}{1}  &110.34 &229.34 &370.13 &321.17 &182.33 \\
+%                      & (0.71)& (1.56)& (2.58)& (2.21)& (1.20)\\ \hline                                                                     
+%\multirow{2}{*}{1.05}  & 59.88 &94.81& 136.87 &155.27 &129.44\\
+%                      & (0.36)& (0.60)& (0.90)& (1.02)& (0.83)\\ \hline                                                                                                                                          
+%\multirow{2}{*}{1.1}  & 30.89 & 38.74 & 46.34 & 51.22 & 51.45\\
+%                      & (0.16)& (0.21)& (0.26)& (0.29)& (0.28)\\ \hline
+%
+%\end{tabular}
+%\end{sidewaystable}
+%
+%
+%
+%
+%\begin{figure}[htbp] 
+%\centering
+%\includegraphics[width=.48\textwidth]{l0055V}
+%\includegraphics[width=.48\textwidth]{l015V}
+%\includegraphics[width=.48\textwidth]{l025V}
+%\caption{在平滑係數$\lambda$=0.05,0.1,0.2及樣本數$n=5$的情況下，chi-EWMA的VSI管制圖($d=(0.1,1.9),(0.25,1.5),(0.5,1.25)$)與R和B EWMA的FSI管制圖在不同$\rho$下的ATS$_1$}\label{ATS comparison5}
+%\end{figure} 
+%
+%
+%\begin{figure}[htbp] 
+%\centering
+%\includegraphics[width=.48\textwidth]{l00510V}
+%\includegraphics[width=.48\textwidth]{l0110V}
+%
+%\includegraphics[width=.48\textwidth]{l0210V}
+%\caption{在平滑係數$\lambda$=0.05,0.1,0.2及樣本數$n=10$的情況下，chi-EWMA的VSI管制圖($d=(0.1,1.9),(0.25,1.5),(0.5,1.25)$)與R和B EWMA的FSI管制圖在不同$\rho$下的ATS$_1$}\label{ATS comparison10}
+%\end{figure} 
+%
+%
+%\newpage
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[width=.75\textwidth]{phase1-1-T}
+%\includegraphics[width=.75\textwidth]{phase1-1-B}
+%\includegraphics[width=.75\textwidth]{phase1-1-R}
+%\caption{第一階段監控的舒華特管制圖}\label{phase1}
+%\end{figure} 
+%
+%
+%\begin{figure}[htbp] 
+%\centering
+%\includegraphics[width=.75\textwidth]{l=02_T-1V}
+%\includegraphics[width=.75\textwidth]{l=02_R-1}
+%\includegraphics[width=.75\textwidth]{l=02_B-1}
+%\caption{三種EWMA管制圖的第二階段監控，其中平滑係數$\lambda=0.2$}\label{phase2-real data}
+%\end{figure} 
+%
+%
+%\begin{figure}[htbp] 
+%\centering
+%\includegraphics[width=.75\textwidth]{l=02_VSI-A-1}
+%\includegraphics[width=.75\textwidth]{l=02_R-A}
+%\includegraphics[width=.75\textwidth]{l=02_B-A}
+%\caption{三種EWMA管制圖在模擬的第二階段資料中的監控結果，其中平滑係數$\lambda=0.2$且真實改變點$\tau=10$}\label{phase2-artificial data}
+%\end{figure} 
+
+
+
+
+
+\end{document}
